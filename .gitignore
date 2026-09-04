@@ -1,0 +1,30 @@
+# Secrets
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Generated outputs
+outputs/*
+!outputs/.gitkeep
+
+# Cache
+data/cache/*
+!data/cache/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db

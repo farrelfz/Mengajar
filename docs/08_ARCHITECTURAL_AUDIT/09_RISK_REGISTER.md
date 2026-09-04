@@ -1,0 +1,9 @@
+# 09 — Architectural Risk Register
+
+| Risk ID | Title | Subsystem | Severity | Evidence | Impact | Likelihood | Recommended Action |
+|---|---|---|---|---|---|---|---|
+| **RISK-01** | CSS Specificity Override for A4 Landscape | Rendering / CSS | **HIGH** | `document.html` defines `.page-a4` (height: 297mm) after `.page-a4-landscape` (height: 210mm) | Every landscape composition page splits across 2 physical sheets (8 pages instead of 4) | High (100% in landscape) | Fix CSS selector order / class naming in `document.html` and `presets.py` |
+| **RISK-02** | Hardcoded Parameter Inference Ladder in Bridge | Composition Bridge | **MEDIUM** | `bridge.py` lines 174–263 contains string `if-elif` ladder for inferring capability spec parameters | Adding a new domain capability requires editing `bridge.py` or specs receive `{}` | High (on new domain addition) | Move parameter adapter logic into `Capability` or `CapabilityMetadata` |
+| **RISK-03** | Fixed Step-to-Page Allocation Strategy | Composition Engine | **MEDIUM** | `bridge.py` iterates `material.pedagogy.sequence` and forces 1 step = 1 page | Cannot compactly pack multiple small narrative units onto a single handout page | Medium | Introduce responsive packing / multi-step pagination in composition |
+| **RISK-04** | Fixed Aspect-Ratio Vector Assets | Capabilities / SVGs | **LOW** | `reasoning_pathway` has fixed 900x260 horizontal SVG | Suboptimal layout when placed in tall, narrow A4 portrait regions | Low | Implement responsive orientation variants for SVGs (horizontal vs vertical) |
+| **RISK-05** | Raw Monospace Math Rendering | Mathematics / HTML | **LOW** | `equation_derivation.py` outputs `<code>` blocks | Complex mathematical formulas lack full typesetting (fractions, integrals) | Low | Integrate lightweight KaTeX or MathJax CSS in templates |

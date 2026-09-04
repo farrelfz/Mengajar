@@ -1,0 +1,195 @@
+"""
+Intelligent Material Director & Pedagogical Choreography — Core Contracts.
+
+Provides strongly typed data models and enums for educational intent,
+learning journeys, material strategies, stage transitions, and capability requirements.
+"""
+
+from __future__ import annotations
+
+from enum import Enum
+from typing import Any
+from pydantic import BaseModel, Field
+
+from app.capabilities.taxonomy import (
+    CapabilityFamily,
+    DensityProfile,
+    PedagogicalRole,
+    SemanticIntent,
+    VisualGrammar,
+)
+
+
+class KnowledgeState(str, Enum):
+    """Learner's baseline familiarity with the topic."""
+    UNKNOWN = "unknown"
+    NOVICE = "novice"
+    DEVELOPING = "developing"
+    INTERMEDIATE = "intermediate"
+    ADVANCED = "advanced"
+
+
+class InstructionalIntent(str, Enum):
+    """
+    High-level objective of the generated artifact.
+    Crucial distinction: EXPLAIN (informational understanding) vs TEACH (scaffolded learning construct).
+    """
+    EXPLAIN = "explain"
+    TEACH = "teach"
+    INTRODUCE = "introduce"
+    REINFORCE = "reinforce"
+    PRACTICE = "practice"
+    ASSESS = "assess"
+    PERSUADE = "persuade"
+    INFORM = "inform"
+    SUMMARIZE = "summarize"
+    REFLECT = "reflect"
+
+
+class CognitiveLevel(str, Enum):
+    """Bloom's revised cognitive taxonomy levels."""
+    RECOGNIZE = "recognize"
+    UNDERSTAND = "understand"
+    APPLY = "apply"
+    ANALYZE = "analyze"
+    EVALUATE = "evaluate"
+    CREATE = "create"
+
+
+class MaterialStrategyType(str, Enum):
+    """Canonical pedagogical and rhetorical strategies."""
+    CONCEPTUAL_DISCOVERY = "conceptual_discovery"
+    CONCRETE_TO_ABSTRACT = "concrete_to_abstract"
+    MISCONCEPTION_CORRECTION = "misconception_correction"
+    WORKED_EXAMPLE_PROGRESSIVE = "worked_example_progressive"
+    PROBLEM_BASED_LEARNING = "problem_based_learning"
+    SCIENTIFIC_REASONING = "scientific_reasoning"
+    RESEARCH_METHOD_TUTORIAL = "research_method_tutorial"
+    ARGUMENTATION_BUILDING = "argumentation_building"
+    EXAM_PREPARATION = "exam_preparation"
+    QUICK_EXPLANATION = "quick_explanation"
+    DEEP_DIVE_TUTORIAL = "deep_dive_tutorial"
+    PRESENTATION_STORY = "presentation_story"
+
+
+class LearningStageType(str, Enum):
+    """Canonical stage types within a structured learning journey."""
+    HOOK = "hook"
+    ACTIVATE_PRIOR_KNOWLEDGE = "activate_prior_knowledge"
+    SURFACE_INTUITION = "surface_intuition"
+    MISCONCEPTION = "misconception"
+    CONCEPTUAL_CONFLICT = "conceptual_conflict"
+    CONCRETE_EXPERIENCE = "concrete_experience"
+    CONCEPT_FORMALIZATION = "concept_formalization"
+    REPRESENTATION = "representation"
+    MATHEMATICAL_DERIVATION = "mathematical_derivation"
+    WORKED_EXAMPLE = "worked_example"
+    GUIDED_PRACTICE = "guided_practice"
+    INDEPENDENT_PRACTICE = "independent_practice"
+    CHALLENGE = "challenge"
+    REFLECTION = "reflection"
+    SUMMARY = "summary"
+    CONTEXT = "context"
+    PROBLEM_STATEMENT = "problem_statement"
+    RESEARCH_GAP = "research_gap"
+    VARIABLE_MAPPING = "variable_mapping"
+    HYPOTHESIS = "hypothesis"
+    METHODOLOGY = "methodology"
+    EVIDENCE_ANALYSIS = "evidence_analysis"
+    SYNTHESIS = "synthesis"
+    CALL_TO_ACTION = "call_to_action"
+
+
+class LearningGoal(BaseModel):
+    """The explicit educational or communication outcome target."""
+    concept: str
+    expected_understanding: str
+    cognitive_level: CognitiveLevel = CognitiveLevel.UNDERSTAND
+    performance_expectation: str = ""
+    domain: str = "general"
+
+
+class AudienceProfile(BaseModel):
+    """Characteristics and cognitive readiness of the target audience."""
+    education_level: str = "undergraduate"
+    prior_knowledge: KnowledgeState = KnowledgeState.NOVICE
+    domain_familiarity: KnowledgeState = KnowledgeState.NOVICE
+    expected_difficulty: str = "medium"
+
+
+class DensityBudget(BaseModel):
+    """Semantic budgeting of information complexity per stage."""
+    level: str = "medium"  # low, medium, high
+    max_concepts_per_stage: int = 2
+    max_derivation_steps: int = 4
+    preferred_density_profile: DensityProfile = DensityProfile.FOCUSED
+
+
+class LearningStage(BaseModel):
+    """A discrete pedagogical milestone in a learning journey."""
+    stage_type: LearningStageType
+    title: str
+    purpose: str
+    cognitive_level: CognitiveLevel = CognitiveLevel.UNDERSTAND
+    target_concepts: list[str] = Field(default_factory=list)
+    prerequisites: list[str] = Field(default_factory=list)
+    key_takeaways: list[str] = Field(default_factory=list)
+    content_payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class LearningJourney(BaseModel):
+    """Ordered, validated sequence of pedagogical stages."""
+    journey_id: str
+    strategy: MaterialStrategyType
+    stages: list[LearningStage] = Field(default_factory=list)
+    total_stages: int = 0
+    estimated_cognitive_load: str = "moderate"
+
+
+class CapabilityRequirement(BaseModel):
+    """
+    Taxonomy requirement generated by Director for Resolver V2.
+    Decoupled from concrete capability IDs.
+    """
+    stage_type: LearningStageType
+    primary_intent: SemanticIntent
+    pedagogical_role: PedagogicalRole
+    preferred_family: CapabilityFamily | None = None
+    preferred_visual_grammar: VisualGrammar | None = None
+    density: DensityProfile = DensityProfile.FOCUSED
+    candidate_tags: list[str] = Field(default_factory=list)
+    fallback_intents: list[SemanticIntent] = Field(default_factory=list)
+    stage_title: str = ""
+    stage_content: str = ""
+
+
+class DirectorDiagnostics(BaseModel):
+    """Comprehensive diagnostic telemetry from the Director."""
+    strategy_selected: MaterialStrategyType
+    strategy_score: float = 1.0
+    domain_policy: str = "default"
+    stage_count: int = 0
+    warnings: list[str] = Field(default_factory=list)
+    density_budget: str = "medium"
+    alternative_strategies: list[tuple[str, float]] = Field(default_factory=list)
+
+
+class DirectorTrace(BaseModel):
+    """Explainability record explaining WHY decisions were made."""
+    strategy: str
+    strategy_reasons: list[str] = Field(default_factory=list)
+    stage_reasons: list[dict[str, str]] = Field(default_factory=list)
+    policy_applied: str = ""
+    density_reason: str = ""
+
+
+class MaterialDirection(BaseModel):
+    """Complete output artifact produced by the Intelligent Material Director."""
+    goal: LearningGoal
+    audience: AudienceProfile
+    intent: InstructionalIntent
+    strategy: MaterialStrategyType
+    journey: LearningJourney
+    choreography: list[CapabilityRequirement]
+    diagnostics: DirectorDiagnostics
+    trace: DirectorTrace
