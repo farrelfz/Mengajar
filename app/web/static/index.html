@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengajar & KIR Studio · AI Document Intelligence</title>
+  <meta name="description" content="Localhost Web Dashboard Studio untuk Pembuatan Materi Pengajaran dan Dokumen KTI berbasis AI melalui 9Router Gateway">
+  <link rel="stylesheet" href="/static/app.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <!-- ──────────────── Topbar Navigation ──────────────── -->
+    <header class="topbar">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+            <path d="M6 6h10"></path>
+            <path d="M6 10h10"></path>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <h1>MENGAJAR & KIR STUDIO</h1>
+          <span>AI DOCUMENT INTELLIGENCE DASHBOARD</span>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <!-- 9Router Status Pill -->
+        <div class="pill" id="pill9Router" title="Status koneksi ke 9Router Gateway di port 20128">
+          <span class="pill-dot pulse-green" id="dot9Router"></span>
+          <span id="label9Router">9Router: 127.0.0.1:20128</span>
+        </div>
+
+        <!-- Active Model Pill -->
+        <div class="pill pill-model" id="pillActiveModel" title="Model AI Aktif yang Digunakan">
+          <span>🤖</span>
+          <span id="labelActiveModel">Memuat model…</span>
+        </div>
+
+        <!-- Dashboard Port Pill -->
+        <div class="pill pill-port" title="Port Web Studio Lokal">
+          <span>PORT 20129</span>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="btn-icon" id="btnRefreshStatus" title="Refresh Status Gateway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M16 21h5v-5"></path>
+          </svg>
+        </button>
+
+        <a href="http://127.0.0.1:20128/dashboard" target="_blank" class="btn-icon" title="Buka Dashboard 9Router (Port 20128)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ──────────────── Main Workspace Layout ──────────────── -->
+    <div class="main-workspace">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="nav-group">
+          <div class="nav-label">Fitur Utama</div>
+          <a class="nav-item active" data-tab="studio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
+            Studio Generator
+          </a>
+          <a class="nav-item" data-tab="models">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Model Hub (9Router)
+          </a>
+          <a class="nav-item" data-tab="playground">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            AI Playground
+          </a>
+          <a class="nav-item" data-tab="benchmarks">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+            Benchmarks
+          </a>
+          <a class="nav-item" data-tab="library">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            Dokumen Library
+          </a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-label">Diagnostik</div>
+          <a class="nav-item" data-tab="doctor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            System Doctor
+          </a>
+        </div>
+
+        <div class="sidebar-footer">
+          <div>Terhubung ke 9Router Gateway</div>
+          <a href="http://127.0.0.1:20128" target="_blank">http://127.0.0.1:20128 ↗</a>
+        </div>
+      </aside>
+
+      <!-- Content Views -->
+      <main class="view-container">
+        
+        <!-- ─────── TAB 1: STUDIO GENERATOR ─────── -->
+        <section class="tab-view active" id="view-studio">
+          <div class="view-header">
+            <h2>Studio Pembuat Dokumen & Materi</h2>
+            <p>Ubah materi mentah atau catatan menjadi Slide Presentasi 16:9, Handout, Lembar Kerja, atau KTI Ilmiah berstandar tinggi.</p>
+          </div>
+
+          <div class="studio-grid">
+            <!-- Left: Document Setup Form -->
+            <div class="card">
+              <div class="card-title">
+                <span>1. Konfigurasi Materi & Parameter Dokumen</span>
+              </div>
+
+              <!-- Format Selector -->
+              <div class="form-group">
+                <label>PILIH FORMAT OUTPUT</label>
+                <div class="format-grid">
+                  <div class="format-option active" data-format="teaching_presentation">
+                    <span class="format-icon">🖥️</span>
+                    <span class="format-name">Slide Presentasi 16:9</span>
+                    <span class="format-desc">Untuk mengajar di kelas / proyektor</span>
+                  </div>
+                  <div class="format-option" data-format="detailed_handout">
+                    <span class="format-icon">📖</span>
+                    <span class="format-name">Handout Lengkap A4</span>
+                    <span class="format-desc">Bahan bacaan siswa komprehensif</span>
+                  </div>
+                  <div class="format-option" data-format="exam_worksheet">
+                    <span class="format-icon">📝</span>
+                    <span class="format-name">Lembar Kerja / LKS</span>
+                    <span class="format-desc">Latihan soal, fenomena & observasi</span>
+                  </div>
+                  <div class="format-option" data-format="kti_document">
+                    <span class="format-icon">🔬</span>
+                    <span class="format-name">Dokumen KTI Ilmiah</span>
+                    <span class="format-desc">Format karya ilmiah standar KIR</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>MATA PELAJARAN / DOMAIN</label>
+                  <select class="form-control" id="selectMatpel">
+                    <option value="Eksperimen (KIR)" selected>🔬 Eksperimen Sains & Riset Ilmiah (KIR)</option>
+                    <option value="Fisika">⚡ Fisika (Physics)</option>
+                    <option value="Matematika">📐 Matematika (Mathematics)</option>
+                    <option value="Biologi">🧬 Biologi (Biology)</option>
+                    <option value="Kimia">🧪 Kimia (Chemistry)</option>
+                    <option value="Metodologi Penelitian">📊 Metodologi Riset & Penulisan KTI</option>
+                    <option value="Informatika">💻 Informatika & Ilmu Komputer</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>JENJANG PENDIDIKAN</label>
+                  <select class="form-control" id="selectJenjang">
+                    <option value="SMA" selected>SMA / MA (High School)</option>
+                    <option value="SMP">SMP / MTs (Middle School)</option>
+                    <option value="SD">SD / MI (Elementary)</option>
+                    <option value="Universitas">Perguruan Tinggi / Kuliah</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>JUDUL DOKUMEN</label>
+                  <input type="text" class="form-control" id="inputTitle" value="Hand Fire Physics Experiment" placeholder="Judul dokumen...">
+                </div>
+
+                <div class="form-group">
+                  <label>MODEL AI (9ROUTER)</label>
+                  <select class="form-control" id="selectStudioModel">
+                    <option value="">Memuat model dari 9Router…</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="editor-header">
+                  <label>MATERI MENTAH (MARKDOWN / TEKS)</label>
+                  <span id="wordCountLabel" style="font-size: 0.72rem; color: var(--text-muted);">0 kata</span>
+                </div>
+                <textarea class="form-control" id="inputRawContent" placeholder="Ketik atau paste materi pengajaran / catatan eksperimen di sini..."></textarea>
+              </div>
+
+              <button class="btn-primary" id="btnStartGenerate">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Mulai Generate Dokumen PDF
+              </button>
+
+              <!-- Live Console Logs situated below Generate Button and Domain -->
+              <div class="form-group terminal-section" style="margin-top: 22px; margin-bottom: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <label style="margin-bottom: 0; font-size: 0.76rem; letter-spacing: 0.05em; font-weight: 600; color: var(--text-secondary);">LOG EKSEKUSI PIPELINE (STREAMING REAL-TIME)</label>
+                  <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn-secondary" id="btnCopyLogs" style="padding: 3px 10px; font-size: 0.72rem; height: 26px; border-radius: 4px;">📋 Salin Log</button>
+                    <button type="button" class="btn-secondary" id="btnClearLogs" style="padding: 3px 10px; font-size: 0.72rem; height: 26px; border-radius: 4px;">🗑️ Bersihkan</button>
+                  </div>
+                </div>
+                <div class="terminal-box" id="terminalLogs" style="height: 240px;">
+                  <div class="terminal-line info">[System] Studio siap dijalankan. Terhubung ke 9Router Gateway.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Live Pipeline Visualizer & Progress -->
+            <div class="card progress-card">
+              <div class="card-title">
+                <span>2. Live Pipeline Visualizer</span>
+                <span id="jobStatusBadge" style="font-size: 0.75rem; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.06); color: var(--text-muted);">Idle</span>
+              </div>
+
+              <!-- Progress Bar -->
+              <div>
+                <div class="progress-header" style="margin-bottom: 8px;">
+                  <span id="progressStepLabel" style="font-size: 0.82rem; font-weight: 500;">Siap memproses...</span>
+                  <span id="progressPercentLabel" style="font-size: 0.82rem; font-weight: 700; color: var(--accent-cyan);">0%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="progressFillBar"></div>
+                </div>
+              </div>
+
+              <!-- Stage Timeline (10-Stage Canonical Pipeline) -->
+              <div class="stage-timeline">
+                <div class="stage-node" id="stageNode1">
+                  <div class="stage-badge">1</div>
+                  <div class="stage-info">
+                    <h4>Structural Parsing & Integrity</h4>
+                    <p>AST deterministic parsing & verifikasi sumber</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode2">
+                  <div class="stage-badge">2</div>
+                  <div class="stage-info">
+                    <h4>Local Semantic Classification</h4>
+                    <p>Rule engine taksonomi & skoring lokal</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode3">
+                  <div class="stage-badge">3</div>
+                  <div class="stage-info">
+                    <h4>Selective AI Reasoning</h4>
+                    <p>Resolusi batched konsep ambigu via AI Gateway</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode4">
+                  <div class="stage-badge">4</div>
+                  <div class="stage-info">
+                    <h4>Content Manifest & Coverage</h4>
+                    <p>Prioritas konsep kritis & estimasi slide</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode5">
+                  <div class="stage-badge">5</div>
+                  <div class="stage-info">
+                    <h4>Presentation Architecture</h4>
+                    <p>Storyboard naratif & alur beban kognitif</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode6">
+                  <div class="stage-badge">6</div>
+                  <div class="stage-info">
+                    <h4>Visual Grammar & Layout</h4>
+                    <p>Gramatika visual matriks & intent semantik</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode7">
+                  <div class="stage-badge">7</div>
+                  <div class="stage-info">
+                    <h4>Deterministic HTML Composition</h4>
+                    <p>Komposisi master grid responsif 16:9</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode8">
+                  <div class="stage-badge">8</div>
+                  <div class="stage-info">
+                    <h4>High-Precision PDF Rendering</h4>
+                    <p>Rendering Chromium presisi cetak & PyMuPDF</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode9">
+                  <div class="stage-badge">9</div>
+                  <div class="stage-info">
+                    <h4>Quality Assurance (25 Gates)</h4>
+                    <p>25 Gerbang mutu semantik & visual inspeksi</p>
+                  </div>
+                </div>
+                <div class="stage-node" id="stageNode10">
+                  <div class="stage-badge">10</div>
+                  <div class="stage-info">
+                    <h4>Repair & Refinement Loop</h4>
+                    <p>Perbaikan deterministik & konvergensi revalidasi</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Result Download & Preview Box -->
+              <div class="result-box" id="resultBox">
+                <div style="font-weight: 600; color: var(--accent-green); margin-bottom: 4px;">✓ Dokumen PDF Berhasil Dibuat!</div>
+                <div id="resultDetails" style="font-size: 0.8rem; color: var(--text-secondary);">hand_fire.pdf · 96.1 KB · 3 Halaman</div>
+                <div class="result-actions">
+                  <button class="btn-primary" id="btnPreviewPdf" style="padding: 8px 16px; font-size: 0.85rem;">
+                    👁️ Preview Dokumen
+                  </button>
+                  <a id="btnDownloadPdf" href="#" target="_blank" class="btn-secondary" style="display: flex; align-items: center; justify-content: center; padding: 8px 16px;">
+                    ⬇️ Download PDF
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────── TAB 2: MODEL HUB (9ROUTER) ─────── -->
+        <section class="tab-view" id="view-models">
+          <div class="view-header">
+            <h2>Model Hub 9Router</h2>
+            <p>Jelajahi dan pilih dari seluruh model yang disediakan oleh gateway lokal 9Router (Port 20128).</p>
+          </div>
+
+          <div style="display: flex; gap: 14px; margin-bottom: 16px;">
+            <input type="text" class="form-control" id="searchModels" placeholder="Cari nama model (contoh: gemini, kimi, qwen, deepseek)..." style="max-width: 400px;">
+            <select class="form-control" id="filterCapability" style="max-width: 200px;">
+              <option value="all">Semua Kapabilitas</option>
+              <option value="reasoning">Reasoning</option>
+              <option value="vision">Vision</option>
+              <option value="tools">Tools</option>
+            </select>
+          </div>
+
+          <div class="models-grid" id="modelsGrid">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- ─────── TAB 3: PLAYGROUND ─────── -->
+        <section class="tab-view" id="view-playground">
+          <div class="view-header">
+            <h2>AI Inference Playground</h2>
+            <p>Uji coba respons dan kecepatan latensi model 9Router secara langsung.</p>
+          </div>
+
+          <div class="card" style="max-width: 800px;">
+            <div class="form-group">
+              <label>PILIH MODEL TARGET</label>
+              <select class="form-control" id="selectPlaygroundModel"></select>
+            </div>
+
+            <div class="form-group">
+              <label>PROMPT PENGUJIAN</label>
+              <textarea class="form-control" id="inputPlaygroundPrompt" style="min-height: 100px;">Jelaskan dalam 1 kalimat konsep dasar gravitasi dan contoh penerapannya di kehidupan sehari-hari.</textarea>
+            </div>
+
+            <button class="btn-primary" id="btnRunPlaygroundTest" style="max-width: 220px; margin-bottom: 20px;">
+              ⚡ Jalankan Tes Inferensi
+            </button>
+
+            <div class="form-group">
+              <label>HASIL RESPONS</label>
+              <div class="terminal-box" id="playgroundResponseBox" style="height: 180px; color: #fff; font-size: 0.85rem;">
+                Belum ada tes yang dijalankan.
+              </div>
+            </div>
+
+            <div id="playgroundMetrics" style="font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 20px;">
+              <span>Latensi: <strong id="metricLatency" style="color: var(--accent-cyan);">-</strong></span>
+              <span>Tokens: <strong id="metricTokens" style="color: var(--accent-green);">-</strong></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────── TAB 4: BENCHMARKS ─────── -->
+        <section class="tab-view" id="view-benchmarks">
+          <div class="view-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+              <h2>Leaderboard Latensi Model</h2>
+              <p>Perbandingan kecepatan respons dan performa inferensi antar-model 9Router.</p>
+            </div>
+            <button class="btn-secondary" id="btnRunBenchmark" style="padding: 10px 18px;">
+              🧪 Jalankan Benchmark Ulang
+            </button>
+          </div>
+
+          <div class="card">
+            <div id="benchmarkLoading" style="display: none; padding: 20px; text-align: center; color: var(--accent-cyan);">
+              Menguji model-model aktif di 9Router… Mohon tunggu beberapa saat.
+            </div>
+            <div id="benchmarkTableWrapper" style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-subtle); color: var(--text-muted);">
+                    <th style="padding: 12px 14px;">PERINGKAT</th>
+                    <th style="padding: 12px 14px;">MODEL</th>
+                    <th style="padding: 12px 14px;">LATENSI (MS)</th>
+                    <th style="padding: 12px 14px;">KECEPATAN</th>
+                    <th style="padding: 12px 14px;">STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="benchmarkTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────── TAB 5: DOCUMENT LIBRARY ─────── -->
+        <section class="tab-view" id="view-library">
+          <div class="view-header">
+            <h2>Dokumen Library & Riwayat Ekspor</h2>
+            <p>Daftar seluruh materi dan dokumen PDF yang telah digenerate pada folder <code>outputs/</code>.</p>
+          </div>
+
+          <div class="doc-grid" id="docGrid">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- ─────── TAB 6: SYSTEM DOCTOR ─────── -->
+        <section class="tab-view" id="view-doctor">
+          <div class="view-header">
+            <h2>System & Infrastructure Doctor</h2>
+            <p>Diagnostik lingkungan kerja, ketersediaan gateway, dan engine rendering.</p>
+          </div>
+
+          <div class="card" style="max-width: 800px;">
+            <div id="doctorChecksList" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ──────────────── PDF Viewer Modal ──────────────── -->
+  <div class="modal-overlay" id="pdfModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="pdfModalTitle" style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">Preview Dokumen PDF</h3>
+        <div style="display: flex; gap: 12px;">
+          <a id="btnModalDownload" href="#" target="_blank" class="btn-secondary" style="padding: 6px 14px;">⬇️ Download</a>
+          <button class="btn-icon" id="btnCloseModal">✕</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdfFrame" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

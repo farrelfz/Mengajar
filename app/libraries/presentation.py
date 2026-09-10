@@ -9,6 +9,7 @@ Provides parameterized components for presentation slides:
 
 from __future__ import annotations
 
+import re
 from typing import Any
 from pydantic import BaseModel, Field
 
@@ -155,13 +156,36 @@ class ConceptIntroRenderer(CapabilityRenderer[ConceptIntroSpec]):
 
 
 def _extract_concept_intro(step: Any, material: Any) -> dict[str, Any]:
-    title = material.content.metadata.title
-    concept = material.content.concepts[0] if material.content.concepts else None
+    title = str(material.content.metadata.title or "")
+    step_purpose = str(getattr(step, "purpose", None) or title)
+
+    matching_concept = None
+    if material.content.concepts:
+        for c in material.content.concepts:
+            c_name = str(c.name or "").lower()
+            purp_lower = step_purpose.lower()
+            if (c_name and c_name in purp_lower) or (purp_lower and purp_lower in c_name):
+                matching_concept = c
+                break
+        if not matching_concept:
+            matching_concept = material.content.concepts[0]
+
+    step_words = [w for w in re.sub(r"[^\w\s]", "", step_purpose.lower()).split() if len(w) > 3]
+    step_facts = [
+        f.statement[:120] for f in material.content.facts
+        if any(w in f.statement.lower() for w in step_words)
+    ]
+    if not step_facts and material.content.facts:
+        step_facts = [f.statement[:120] for f in material.content.facts[:3]]
+
+    concept_name = getattr(step, "title", None) or (matching_concept.name if matching_concept else step_purpose)
+    formal_def = matching_concept.formal_definition if matching_concept else step_purpose
+
     return {
-        "concept_name": concept.name if concept else title,
-        "formal_definition": concept.formal_definition if concept else (step.purpose if hasattr(step, "purpose") else title),
-        "intuitive_analogy": concept.intuitive_explanation if concept else None,
-        "key_characteristics": [f.statement[:80] for f in material.content.facts[:3]] if material.content.facts else [],
+        "concept_name": concept_name,
+        "formal_definition": formal_def,
+        "intuitive_analogy": matching_concept.intuitive_explanation if matching_concept else None,
+        "key_characteristics": step_facts,
     }
 
 

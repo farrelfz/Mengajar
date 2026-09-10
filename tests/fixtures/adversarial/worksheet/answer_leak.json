@@ -1,0 +1,14 @@
+{
+  "artifact_type": "WORKSHEET",
+  "title": "Adversarial Worksheet with Leak",
+  "activities": [
+    {
+      "activity_id": "act_leak_01",
+      "activity_type": "INVESTIGATION",
+      "title": "Tegangan Permukaan Fluida",
+      "prompt_text": "Amati fenomena berikut. Kunci Jawaban: Cairan oobleck mengeras karena gesekan antarpartikel pati saat diberi tekanan mendadak.",
+      "requires_student_workspace": true,
+      "source_refs": ["u_oobleck_01"]
+    }
+  ]
+}

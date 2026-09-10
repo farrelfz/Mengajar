@@ -1,0 +1,15 @@
+{
+  "artifact_type": "PRESENTATION",
+  "deck_title": "Adversarial Dense Deck",
+  "slides": [
+    {
+      "slide_id": "slide_dense_01",
+      "slide_number": 1,
+      "title": "Overloaded Heat Transfer",
+      "layout": "concept_card",
+      "content": "This slide contains excessive information with more than seven separate knowledge blocks causing cognitive overload and text clipping across viewport bounds.",
+      "knowledge_unit_ids": ["u1", "u2", "u3", "u4", "u5", "u6", "u7", "u8"],
+      "source_refs": ["u1", "u2", "u3", "u4", "u5", "u6", "u7", "u8"]
+    }
+  ]
+}

@@ -216,6 +216,368 @@
             line-height: 1.6;
             color: #334155;
         }
+
+        /* ── Presentation Visual Layouts ── */
+        .slide-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 24px 30px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            width: 100%;
+        }
+        .card-header-bar {
+            margin-bottom: 16px;
+            border-bottom: 1.5px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+        .card-header-bar h2 {
+            font-size: 20pt;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 6px 0 0 0;
+            letter-spacing: -0.01em;
+        }
+        .card-tag {
+            display: inline-block;
+            font-size: 11pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+
+        /* Hero */
+        .hero-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: radial-gradient(circle at top right, #f8fafc, #ffffff);
+            border-color: #cbd5e1;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: 9999px;
+            font-size: 11pt;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-size: 32pt;
+            font-weight: 900;
+            color: #0f172a;
+            margin: 0 0 16px 0;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 16pt;
+            color: #475569;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .hero-decor-line {
+            width: 80px;
+            height: 4px;
+            background: #2563eb;
+            border-radius: 2px;
+            margin: 24px auto 0 auto;
+        }
+
+        /* Formula */
+        .math-display-box {
+            background: #f8fafc;
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 14px 0 18px 0;
+        }
+        .formula-latex {
+            font-size: 26pt;
+            font-weight: 700;
+            color: #1e3a8a;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .formula-breakdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .formula-var-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+        .var-sym {
+            font-size: 16pt;
+            font-weight: 800;
+            color: #2563eb;
+            font-family: serif;
+            min-width: 36px;
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 2px 6px;
+        }
+        .var-desc {
+            font-size: 11pt;
+            color: #334155;
+            font-weight: 500;
+        }
+        .formula-context-note {
+            margin-top: 14px;
+            font-size: 11.5pt;
+            color: #64748b;
+            font-style: italic;
+            border-left: 3px solid #3b82f6;
+            padding-left: 12px;
+        }
+
+        /* Comparison 3 */
+        .comparison-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+        }
+        .comparison-col {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .comparison-col h3 {
+            font-size: 14pt;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+        }
+        .comparison-col p {
+            font-size: 11.5pt;
+            color: #334155;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Triangle */
+        .triangle-container {
+            padding: 10px 0;
+        }
+        .triangle-legend {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 14px;
+            font-size: 11.5pt;
+            color: #991b1b;
+        }
+
+        /* Tables */
+        .table-container-scroll {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+        .presentation-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5pt;
+        }
+        .presentation-table th {
+            background: #1e293b;
+            color: #ffffff;
+            font-weight: 700;
+            text-align: left;
+            padding: 10px 14px;
+            border: 1px solid #334155;
+        }
+        .presentation-table td {
+            padding: 9px 14px;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+        .presentation-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* Risk / Safety */
+        .risk-card {
+            border-color: #f87171;
+            background: #fffafa;
+        }
+        .danger-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: #ffffff;
+            font-size: 10pt;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+        .risk-body-box {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #ffffff;
+            border: 1.5px solid #fecaca;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 16px 0;
+        }
+        .risk-icon {
+            font-size: 32pt;
+        }
+        .risk-text p {
+            font-size: 13pt;
+            color: #7f1d1d;
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .safety-checklist-summary {
+            display: flex;
+            gap: 16px;
+            font-size: 11pt;
+            font-weight: 700;
+            color: #065f46;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            padding: 10px 16px;
+        }
+
+        /* Timeline / Procedure */
+        .timeline-horizontal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: #ffffff;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12pt;
+        }
+        .step-card {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            flex-grow: 1;
+        }
+        .step-card p {
+            font-size: 11.5pt;
+            color: #334155;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        /* Question */
+        .question-card {
+            text-align: center;
+            padding: 36px 30px;
+            background: #faf5ff;
+            border-color: #d8b4fe;
+        }
+        .question-badge {
+            display: inline-block;
+            background: #9333ea;
+            color: #ffffff;
+            font-size: 10pt;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            margin-bottom: 16px;
+        }
+        .question-heading {
+            font-size: 20pt;
+            font-weight: 800;
+            color: #581c87;
+            margin: 0 0 16px 0;
+        }
+        .question-quote-box p {
+            font-size: 16pt;
+            font-style: italic;
+            color: #3b0764;
+            line-height: 1.5;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        .inquiry-hint {
+            margin-top: 20px;
+            font-size: 11pt;
+            color: #7e22ce;
+            font-weight: 600;
+        }
+
+        /* Synthesis */
+        .synthesis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+        }
+        .synthesis-item {
+            background: #f0fdf4;
+            border: 1.5px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .synthesis-item h4 {
+            font-size: 13.5pt;
+            color: #166534;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+        }
+        .synthesis-item p {
+            font-size: 11.5pt;
+            color: #1e293b;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        /* Concept */
+        .concept-body p {
+            font-size: 12.5pt;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0 0 12px 0;
+        }
+        .concept-list {
+            margin: 10px 0 0 0;
+            padding-left: 22px;
+        }
+        .concept-list li {
+            font-size: 12pt;
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
     </style>
 </head>
 <body>

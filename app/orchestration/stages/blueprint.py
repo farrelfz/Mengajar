@@ -5,7 +5,10 @@ Blueprint Generation Stage: Calls ContentIntelligenceAgent and MaterialBlueprint
 from __future__ import annotations
 
 import asyncio
-from app.agents.content_intelligence_agent import ContentIntelligenceAgent
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from app.agents.content_intelligence_agent import ContentIntelligenceAgent
 from app.blueprints.content import (
     AudienceLevel,
     ConceptDefinition,
@@ -43,7 +46,10 @@ class BlueprintGenerationStage(ProductionStage):
         agent: ContentIntelligenceAgent | None = None,
         generator: MaterialBlueprintGenerator | None = None,
     ) -> None:
-        self.agent = agent or ContentIntelligenceAgent()
+        if agent is None:
+            from app.agents.content_intelligence_agent import ContentIntelligenceAgent
+            agent = ContentIntelligenceAgent()
+        self.agent = agent
         self.generator = generator or MaterialBlueprintGenerator()
 
     @property

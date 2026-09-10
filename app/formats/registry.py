@@ -26,6 +26,8 @@ class FormatRegistry:
             "presentation": PRESENTATION_16_9.id,
             "16:9": PRESENTATION_16_9.id,
             "16_9": PRESENTATION_16_9.id,
+            "teaching_presentation": PRESENTATION_16_9.id,
+            "research_presentation": PRESENTATION_16_9.id,
             
             # A4 Portrait aliases
             "a4-portrait": A4_PORTRAIT.id,
@@ -33,6 +35,16 @@ class FormatRegistry:
             "a4": A4_PORTRAIT.id,
             "portrait": A4_PORTRAIT.id,
             "a4_handout": A4_PORTRAIT.id,
+            "handout_a4": A4_PORTRAIT.id,
+            "handout": A4_PORTRAIT.id,
+            "detailed_handout": A4_PORTRAIT.id,
+            "worksheet_a4": A4_PORTRAIT.id,
+            "worksheet": A4_PORTRAIT.id,
+            "exam_worksheet": A4_PORTRAIT.id,
+            "student_worksheet": A4_PORTRAIT.id,
+            "kti_a4": A4_PORTRAIT.id,
+            "kti_document": A4_PORTRAIT.id,
+            "kti": A4_PORTRAIT.id,
             
             # A4 Landscape aliases
             "a4-landscape": A4_LANDSCAPE.id,
@@ -63,7 +75,7 @@ class FormatRegistry:
         if isinstance(identifier, DocumentMode):
             identifier = identifier.value
 
-        key = str(identifier).lower().strip()
+        key = identifier.lower().strip()
 
         # Check canonical
         if key in self._formats:

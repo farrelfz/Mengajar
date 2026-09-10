@@ -1,0 +1,34 @@
+{
+  "fixture_id": "scientific_kti_climate_microalgae",
+  "source_path": "/home/si/Codingan/Mencari nafkah/Mengajar/tests/fixtures/benchmark_corpus/scientific_kti_climate_microalgae.md",
+  "corpus_category": "SCIENTIFIC_HEAVY",
+  "domain": "Bioteknologi Lingkungan / Sekuestrasi Karbon",
+  "difficulty_level": "INTERMEDIATE",
+  "structural_signature": {
+    "token_count": 267,
+    "character_count": 1943,
+    "section_count": 9,
+    "max_heading_depth": 3,
+    "table_count": 1,
+    "formula_count": 10,
+    "has_code_blocks": false,
+    "has_mixed_languages": false,
+    "card_estimate": 9
+  },
+  "semantic_density": 0.2225,
+  "formula_density": 1.0,
+  "table_density": 0.3333333333333333,
+  "narrative_complexity": 0.3,
+  "inquiry_complexity": 0.4,
+  "evidence_complexity": 0.9,
+  "expected_artifact_types": [
+    "PRESENTATION",
+    "HANDOUT",
+    "WORKSHEET",
+    "SCIENTIFIC_DOCUMENT"
+  ],
+  "known_pathologies": [],
+  "split": "UNSEEN_GENERALIZATION",
+  "provenance": "Phase 4.1 Benchmark Corpus Expansion",
+  "content_hash": "771bdb005bfad297"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "policy_name": "Universal Benchmark Certification Policy",
+  "policy_version": "1.0.0",
+  "governing_authority": "Universal Document Intelligence System V5",
+  "thresholds": {
+    "EXCELLENT_AVERAGE_THRESHOLD": 0.90,
+    "EXCELLENT_MIN_DIMENSION": 0.70,
+    "ACCEPTABLE_AVERAGE_THRESHOLD": 0.70,
+    "CRITICAL_DIMENSION_FLOOR": 0.50,
+    "DEFAULT_NOISE_THRESHOLD": 0.05,
+    "MIN_CONFIDENCE_THRESHOLD": 0.80
+  },
+  "dimension_noise_tolerances": {
+    "VISUAL": 0.08,
+    "PHYSICAL_RENDER": 0.08,
+    "STRUCTURAL": 0.06,
+    "SEMANTIC": 0.05,
+    "PEDAGOGICAL": 0.04,
+    "SCIENTIFIC": 0.00,
+    "FACTUAL_GROUNDING": 0.00,
+    "SAFETY_INVARIANTS": 0.00
+  },
+  "decision_precedence": [
+    "HARD_INVARIANT_FAILURE -> BENCHMARK_INSUFFICIENT",
+    "MATERIAL_REGRESSION -> BENCHMARK_REGRESSION",
+    "CRITICAL_DIMENSION_DROP -> MANUAL_BENCHMARK_REVIEW_REQUIRED",
+    "SOFT_WARNING -> CERTIFIED_WITH_WARNINGS",
+    "EXCELLENT_SCORES -> CERTIFIED_EXCELLENT",
+    "STANDARD_PASS -> CERTIFIED_ACCEPTABLE"
+  ]
+}

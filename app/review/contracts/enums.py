@@ -1,0 +1,157 @@
+"""
+Universal Document Intelligence System V5 — Canonical Review Enumerations.
+
+Phase 6: Defines typed, immutable domain categories for cases, triggers,
+epistemic evaluations, decisions, directives, capabilities, and governance.
+"""
+
+from __future__ import annotations
+from enum import Enum
+
+
+class ReviewState(str, Enum):
+    """Lifecycle states of a human review case (independent from production pipeline)."""
+    OPEN = "OPEN"
+    LEASED = "LEASED"
+    UNDER_REVIEW = "UNDER_REVIEW"
+    AWAITING_SECOND_REVIEW = "AWAITING_SECOND_REVIEW"
+    ADJUDICATION = "ADJUDICATION"
+    DIRECTIVE_PROPOSED = "DIRECTIVE_PROPOSED"
+    DIRECTIVE_VALIDATED = "DIRECTIVE_VALIDATED"
+    REPAIR_REPLAY_REQUESTED = "REPAIR_REPLAY_REQUESTED"
+    RESOLVED = "RESOLVED"
+    ESCALATED = "ESCALATED"
+    DEFERRED = "DEFERRED"
+    CLOSED_NO_ACTION = "CLOSED_NO_ACTION"
+
+
+class ReviewTrigger(str, Enum):
+    """Root event originating the review case."""
+    QUALITY_MANUAL_REVIEW = "QUALITY_MANUAL_REVIEW"
+    CONVERGENCE_FAILURE = "CONVERGENCE_FAILURE"
+    BENCHMARK_REGRESSION = "BENCHMARK_REGRESSION"
+    BENCHMARK_INSUFFICIENT = "BENCHMARK_INSUFFICIENT"
+    REPAIR_INVARIANT_FAILURE = "REPAIR_INVARIANT_FAILURE"
+    UNKNOWN_ROOT_CAUSE = "UNKNOWN_ROOT_CAUSE"
+    EVIDENCE_INSUFFICIENCY = "EVIDENCE_INSUFFICIENCY"
+    ADVERSARIAL_FAILURE = "ADVERSARIAL_FAILURE"
+
+
+class ReviewabilityStatus(str, Enum):
+    """Initial assessment of whether a case requires human expert time."""
+    AUTO_RESOLVABLE = "AUTO_RESOLVABLE"
+    EXPERT_REVIEW_REQUIRED = "EXPERT_REVIEW_REQUIRED"
+    INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
+    SYSTEM_ERROR = "SYSTEM_ERROR"
+    NON_REVIEWABLE = "NON_REVIEWABLE"
+
+
+class EpistemicStatus(str, Enum):
+    """Level of epistemic certainty backing a reviewer observation or claim."""
+    VERIFIED = "VERIFIED"
+    LIKELY = "LIKELY"
+    UNCERTAIN = "UNCERTAIN"
+    INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
+
+
+class ReviewConfidence(str, Enum):
+    """Reviewer self-reported subjective confidence level."""
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
+class ExpertDecisionType(str, Enum):
+    """Canonical determinations an expert reviewer can register."""
+    CONFIRM_DEFECT = "CONFIRM_DEFECT"
+    DISPUTE_FALSE_POSITIVE = "DISPUTE_FALSE_POSITIVE"
+    IDENTIFY_FALSE_NEGATIVE = "IDENTIFY_FALSE_NEGATIVE"
+    CONFIRM_ROOT_CAUSE = "CONFIRM_ROOT_CAUSE"
+    CORRECT_ROOT_CAUSE = "CORRECT_ROOT_CAUSE"
+    APPROVE_REPAIR_PLAN = "APPROVE_REPAIR_PLAN"
+    DIRECT_TARGETED_REPAIR = "DIRECT_TARGETED_REPAIR"
+    ESCALATE_TO_SPECIALIST = "ESCALATE_TO_SPECIALIST"
+    REJECT_AND_TERMINATE = "REJECT_AND_TERMINATE"
+    PROPOSE_GOLDEN_CANDIDATE = "PROPOSE_GOLDEN_CANDIDATE"
+    REJECT_BENCHMARK_PROPOSAL = "REJECT_BENCHMARK_PROPOSAL"
+
+
+class DirectiveCategory(str, Enum):
+    """Broad functional grouping of review directives."""
+    DIAGNOSIS = "DIAGNOSIS"
+    REPAIR = "REPAIR"
+    EVIDENCE = "EVIDENCE"
+    PEDAGOGICAL = "PEDAGOGICAL"
+    GOVERNANCE = "GOVERNANCE"
+
+
+class DirectiveType(str, Enum):
+    """Actionable declarative directives emitted by reviewers."""
+    # Diagnosis
+    CONFIRM_ROOT_CAUSE = "CONFIRM_ROOT_CAUSE"
+    RECLASSIFY_ROOT_CAUSE = "RECLASSIFY_ROOT_CAUSE"
+    MARK_ROOT_CAUSE_UNKNOWN = "MARK_ROOT_CAUSE_UNKNOWN"
+    # Repair
+    SPLIT_SLIDE = "SPLIT_SLIDE"
+    REMAP_COMPONENT = "REMAP_COMPONENT"
+    ADJUST_TOKEN = "ADJUST_TOKEN"
+    RECOMPOSE_PAGE = "RECOMPOSE_PAGE"
+    REPAGINATE = "REPAGINATE"
+    REQUEST_SOURCE_RECHECK = "REQUEST_SOURCE_RECHECK"
+    # Evidence
+    REQUEST_CITATION_BACKING = "REQUEST_CITATION_BACKING"
+    REQUEST_SOURCE_VERIFICATION = "REQUEST_SOURCE_VERIFICATION"
+    MARK_EVIDENCE_INSUFFICIENT = "MARK_EVIDENCE_INSUFFICIENT"
+    # Pedagogical
+    REDUCE_COGNITIVE_LOAD = "REDUCE_COGNITIVE_LOAD"
+    RESTORE_INQUIRY_ARC = "RESTORE_INQUIRY_ARC"
+    WITHHOLD_EXPLANATION = "WITHHOLD_EXPLANATION"
+    # Governance
+    ESCALATE = "ESCALATE"
+    REQUEST_SECOND_REVIEW = "REQUEST_SECOND_REVIEW"
+    PROPOSE_GOLDEN_CASE = "PROPOSE_GOLDEN_CASE"
+
+
+class EvidenceSufficiencyLevel(str, Enum):
+    """Evaluated sufficiency of available evidence for responsible judgment."""
+    SUFFICIENT = "SUFFICIENT"
+    PARTIALLY_SUFFICIENT = "PARTIALLY_SUFFICIENT"
+    INSUFFICIENT = "INSUFFICIENT"
+
+
+class DisagreementType(str, Enum):
+    """Categorized divergence between concurrent expert reviewers."""
+    AGREEMENT = "AGREEMENT"
+    OBSERVATION_DISAGREEMENT = "OBSERVATION_DISAGREEMENT"
+    INTERPRETATION_DISAGREEMENT = "INTERPRETATION_DISAGREEMENT"
+    ROOT_CAUSE_DISAGREEMENT = "ROOT_CAUSE_DISAGREEMENT"
+    DIRECTIVE_DISAGREEMENT = "DIRECTIVE_DISAGREEMENT"
+    EVIDENCE_SUFFICIENCY_DISAGREEMENT = "EVIDENCE_SUFFICIENCY_DISAGREEMENT"
+
+
+class AdjudicationOutcome(str, Enum):
+    """Outcome of multi-reviewer synthesis or senior adjudication."""
+    CONSENSUS = "CONSENSUS"
+    SECOND_REVIEW_REQUIRED = "SECOND_REVIEW_REQUIRED"
+    EXPERT_ADJUDICATION_REQUIRED = "EXPERT_ADJUDICATION_REQUIRED"
+    INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
+    ESCALATED = "ESCALATED"
+
+
+class ReviewerCapability(str, Enum):
+    """Specific disciplinary competence recognized for review routing."""
+    PEDAGOGY = "PEDAGOGY"
+    PHYSICS_EDUCATION = "PHYSICS_EDUCATION"
+    SCIENTIFIC_WRITING = "SCIENTIFIC_WRITING"
+    CITATION_FORENSICS = "CITATION_FORENSICS"
+    DOCUMENT_LAYOUT = "DOCUMENT_LAYOUT"
+    VISUAL_DESIGN = "VISUAL_DESIGN"
+    INQUIRY_LEARNING = "INQUIRY_LEARNING"
+    CURRICULUM_DESIGN = "CURRICULUM_DESIGN"
+
+
+class BlindReviewMode(str, Enum):
+    """Control over which metadata is masked during review to prevent bias."""
+    FULL_CONTEXT_REVIEW = "FULL_CONTEXT_REVIEW"
+    PARTIALLY_BLIND_REVIEW = "PARTIALLY_BLIND_REVIEW"
+    BLIND_REVIEW = "BLIND_REVIEW"

@@ -1,0 +1,607 @@
+{
+  "corpus_id": "universal_golden_corpus",
+  "metadata": {
+    "title": "Universal Document Intelligence V5 Golden Benchmark Corpus",
+    "description": "Governed reference corpus spanning Experimental Phenomena across 4 distinct artifact targets.",
+    "case_count": 2,
+    "reference_count": 8
+  },
+  "cases": {
+    "GOLDEN_OOBLECK": {
+      "case_id": "GOLDEN_OOBLECK",
+      "source_path": "tests/fixtures/oobleck_experiment.md",
+      "source_hash": "acc34cb652c738ea",
+      "corpus_category": "EXPERIMENT_HEAVY",
+      "difficulty_level": "INTERMEDIATE",
+      "references": {
+        "PRESENTATION": {
+          "artifact_id": "ref_oobleck_presentation",
+          "artifact_type": "PRESENTATION",
+          "source_case_id": "GOLDEN_OOBLECK",
+          "artifact_file_reference": "golden_corpus/cases/oobleck/references/presentation.json",
+          "semantic_expectations": {
+            "concepts": [
+              "non_newtonian_fluid",
+              "shear_stress",
+              "shear_rate",
+              "viscosity"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 12
+          },
+          "visual_expectations": {
+            "visual_density": 0.38
+          },
+          "pedagogical_expectations": {},
+          "scientific_expectations": {},
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "EXACT",
+            "structural": "TOLERANT",
+            "visual": "FUNCTIONAL_EQUIVALENCE"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "narrative_progression",
+              "progressive_disclosure",
+              "visual_hierarchy"
+            ],
+            "must_not_have": [
+              "wall_of_text",
+              "unjustified_slides",
+              "consecutive_identical_grammar"
+            ],
+            "preferred": [
+              "diagram_focal_point",
+              "breathing_slides"
+            ],
+            "acceptable_variation": [
+              "color_palette",
+              "layout_density_variance"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "WALL_OF_TEXT",
+              "PRESENTATION_HANDOUT_COLLAPSE",
+              "COGNITIVE_OVERLOAD"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.938943,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        },
+        "HANDOUT": {
+          "artifact_id": "ref_oobleck_handout",
+          "artifact_type": "HANDOUT",
+          "source_case_id": "GOLDEN_OOBLECK",
+          "artifact_file_reference": "golden_corpus/cases/oobleck/references/handout.json",
+          "semantic_expectations": {
+            "concepts": [
+              "non_newtonian_fluid",
+              "viscosity",
+              "shear_thickening",
+              "rheology",
+              "cornstarch_suspension"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 18
+          },
+          "visual_expectations": {
+            "visual_density": 0.72
+          },
+          "pedagogical_expectations": {},
+          "scientific_expectations": {},
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "EXACT",
+            "structural": "TOLERANT",
+            "visual": "TOLERANT"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "independent_comprehension",
+              "5_layer_explanation",
+              "conceptual_continuity"
+            ],
+            "must_not_have": [
+              "slide_fragmentation",
+              "unexplained_jargon",
+              "missing_transitions"
+            ],
+            "preferred": [
+              "worked_examples",
+              "misconception_callouts"
+            ],
+            "acceptable_variation": [
+              "callout_placement",
+              "section_length"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "SLIDE_FRAGMENTATION",
+              "WALL_OF_TEXT",
+              "READING_FLOW_BREAK"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.9389598,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        },
+        "WORKSHEET": {
+          "artifact_id": "ref_oobleck_worksheet",
+          "artifact_type": "WORKSHEET",
+          "source_case_id": "GOLDEN_OOBLECK",
+          "artifact_file_reference": "golden_corpus/cases/oobleck/references/worksheet.json",
+          "semantic_expectations": {
+            "concepts": [
+              "fluid_resistance",
+              "impact_force",
+              "relaxation_time"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 10
+          },
+          "visual_expectations": {
+            "visual_density": 0.48
+          },
+          "pedagogical_expectations": {
+            "inquiry_arc_complete": true,
+            "observation_before_explanation": true
+          },
+          "scientific_expectations": {},
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "TOLERANT",
+            "structural": "TOLERANT",
+            "pedagogical": "EXACT"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "guided_inquiry_arc",
+              "withheld_answers",
+              "dedicated_workspace"
+            ],
+            "must_not_have": [
+              "answer_leak",
+              "quiz_collapse",
+              "prefilled_conclusions"
+            ],
+            "preferred": [
+              "student_data_table",
+              "predictive_sketch_box"
+            ],
+            "acceptable_variation": [
+              "table_dimension",
+              "workspace_dimensions"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "ANSWER_LEAK",
+              "QUIZ_COLLAPSE",
+              "INQUIRY_ARC_BROKEN"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.938977,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        },
+        "SCIENTIFIC_DOCUMENT": {
+          "artifact_id": "ref_oobleck_scientific",
+          "artifact_type": "SCIENTIFIC_DOCUMENT",
+          "source_case_id": "GOLDEN_OOBLECK",
+          "artifact_file_reference": "golden_corpus/cases/oobleck/references/scientific_document.json",
+          "semantic_expectations": {
+            "concepts": [
+              "shear_thickening_mechanism",
+              "cornstarch_water_ratio",
+              "hydrodynamic_clusters"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 22
+          },
+          "visual_expectations": {
+            "visual_density": 0.85
+          },
+          "pedagogical_expectations": {},
+          "scientific_expectations": {
+            "citation_density": 1.0,
+            "evidence_linkage_intact": true
+          },
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "EXACT",
+            "structural": "TOLERANT",
+            "scientific": "EXACT"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "formal_bab_hierarchy",
+              "claim_evidence_reasoning",
+              "limitation_disclosure"
+            ],
+            "must_not_have": [
+              "unsupported_claims",
+              "citation_dumping",
+              "causal_overclaim"
+            ],
+            "preferred": [
+              "statistical_table",
+              "rheology_curve"
+            ],
+            "acceptable_variation": [
+              "subheading_numbering",
+              "citation_style"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "UNSUPPORTED_CLAIM",
+              "FABRICATED_CITATION",
+              "CER_BREAK"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.9389915,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        }
+      },
+      "taxonomy_category": "EXPERIMENTAL_PHENOMENA",
+      "adversarial_cases": {}
+    },
+    "GOLDEN_HAND_FIRE": {
+      "case_id": "GOLDEN_HAND_FIRE",
+      "source_path": "tests/fixtures/hand_fire_full.md",
+      "source_hash": "4c2692987a66b7ce",
+      "corpus_category": "EXPERIMENT_HEAVY",
+      "difficulty_level": "ADVANCED",
+      "references": {
+        "PRESENTATION": {
+          "artifact_id": "ref_handfire_presentation",
+          "artifact_type": "PRESENTATION",
+          "source_case_id": "GOLDEN_HAND_FIRE",
+          "artifact_file_reference": "golden_corpus/cases/hand_fire/references/presentation.json",
+          "semantic_expectations": {
+            "concepts": [
+              "butane_combustion",
+              "heat_capacity_water",
+              "thermal_conductivity",
+              "vaporization_enthalpy"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 14
+          },
+          "visual_expectations": {
+            "visual_density": 0.4
+          },
+          "pedagogical_expectations": {},
+          "scientific_expectations": {},
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "EXACT",
+            "structural": "TOLERANT",
+            "visual": "FUNCTIONAL_EQUIVALENCE"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "safety_first_presentation",
+              "dramatic_hook",
+              "clear_thermal_mechanism"
+            ],
+            "must_not_have": [
+              "wall_of_text",
+              "missing_safety_warnings"
+            ],
+            "preferred": [
+              "color_contrast_flame",
+              "step_process_diagram"
+            ],
+            "acceptable_variation": [
+              "slide_count_10_to_16"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "WALL_OF_TEXT",
+              "COGNITIVE_OVERLOAD"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.9390016,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        },
+        "HANDOUT": {
+          "artifact_id": "ref_handfire_handout",
+          "artifact_type": "HANDOUT",
+          "source_case_id": "GOLDEN_HAND_FIRE",
+          "artifact_file_reference": "golden_corpus/cases/hand_fire/references/handout.json",
+          "semantic_expectations": {
+            "concepts": [
+              "caloric_capacity",
+              "butane_gas",
+              "water_protection_layer",
+              "heat_flux",
+              "safety_protocols"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 20
+          },
+          "visual_expectations": {
+            "visual_density": 0.75
+          },
+          "pedagogical_expectations": {},
+          "scientific_expectations": {},
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "EXACT",
+            "structural": "TOLERANT",
+            "visual": "TOLERANT"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "complete_risk_mitigation",
+              "enthalpy_calculations",
+              "hierarchical_safety_rules"
+            ],
+            "must_not_have": [
+              "slide_fragmentation",
+              "unexplained_formulas"
+            ],
+            "preferred": [
+              "worked_caloric_formula",
+              "safety_warning_callouts"
+            ],
+            "acceptable_variation": [
+              "callout_styling"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "SLIDE_FRAGMENTATION",
+              "WALL_OF_TEXT"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.9390092,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        },
+        "WORKSHEET": {
+          "artifact_id": "ref_handfire_worksheet",
+          "artifact_type": "WORKSHEET",
+          "source_case_id": "GOLDEN_HAND_FIRE",
+          "artifact_file_reference": "golden_corpus/cases/hand_fire/references/worksheet.json",
+          "semantic_expectations": {
+            "concepts": [
+              "flame_duration",
+              "water_temperature_delta",
+              "heat_transfer"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 11
+          },
+          "visual_expectations": {
+            "visual_density": 0.5
+          },
+          "pedagogical_expectations": {
+            "inquiry_arc_complete": true,
+            "observation_before_explanation": true
+          },
+          "scientific_expectations": {},
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "TOLERANT",
+            "structural": "TOLERANT",
+            "pedagogical": "EXACT"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "observation_log",
+              "temperature_prediction",
+              "withheld_caloric_deduction"
+            ],
+            "must_not_have": [
+              "answer_leak",
+              "quiz_collapse"
+            ],
+            "preferred": [
+              "hazard_checklist_activity"
+            ],
+            "acceptable_variation": [
+              "table_rows"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "ANSWER_LEAK",
+              "QUIZ_COLLAPSE"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.9390194,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        },
+        "SCIENTIFIC_DOCUMENT": {
+          "artifact_id": "ref_handfire_scientific",
+          "artifact_type": "SCIENTIFIC_DOCUMENT",
+          "source_case_id": "GOLDEN_HAND_FIRE",
+          "artifact_file_reference": "golden_corpus/cases/hand_fire/references/scientific_document.json",
+          "semantic_expectations": {
+            "concepts": [
+              "thermal_boundary_layer",
+              "butane_combustion_kinetics",
+              "heat_dissipation_rate"
+            ]
+          },
+          "structural_expectations": {
+            "block_count": 24
+          },
+          "visual_expectations": {
+            "visual_density": 0.88
+          },
+          "pedagogical_expectations": {},
+          "scientific_expectations": {
+            "citation_density": 1.0,
+            "evidence_linkage_intact": true
+          },
+          "hard_invariants": {
+            "no_fabricated_claims": true,
+            "no_unsupported_evidence": true,
+            "no_traceability_break": true,
+            "no_text_clipping": true,
+            "no_element_collision": true,
+            "artifact_type_preserved": true,
+            "source_grounding_preserved": true,
+            "no_answer_leak": true,
+            "citation_integrity_preserved": true
+          },
+          "acceptable_variations": {
+            "semantic": "EXACT",
+            "structural": "TOLERANT",
+            "scientific": "EXACT"
+          },
+          "quality_annotations": [],
+          "expected_characteristics": {
+            "must_have": [
+              "formal_bab_i_v",
+              "calorimetric_evidence_linkage",
+              "safety_limitation_disclosure"
+            ],
+            "must_not_have": [
+              "unsupported_claims",
+              "conclusions_without_data"
+            ],
+            "preferred": [
+              "schematic_diagram",
+              "error_margin_analysis"
+            ],
+            "acceptable_variation": [
+              "reference_format"
+            ]
+          },
+          "forbidden_failures": {
+            "forbidden_failure_codes": [
+              "UNSUPPORTED_CLAIM",
+              "CER_BREAK"
+            ]
+          },
+          "adversarial_variants": [],
+          "reference_provenance": "",
+          "created_at": 1788795067.9390292,
+          "version": "1.0.0",
+          "review_status": "CERTIFIED"
+        }
+      },
+      "taxonomy_category": "EXPERIMENTAL_PHENOMENA",
+      "adversarial_cases": {}
+    }
+  },
+  "current_version": {
+    "version": "1.0.0",
+    "parent_version": null,
+    "change_summary": "Initial curated 2x4 Golden Corpus covering Oobleck and Hand Fire experiments across all 4 artifact formats.",
+    "created_at": 1788795067.939048,
+    "created_by": "Universal Document Intelligence System V5",
+    "review_provenance": "Forensic Architecture Audit Phase 5",
+    "content_digest": "1f0fef92d97d363201b7249283e144f7e523954e228d3fd8b0b75f7950073ea6"
+  }
+}

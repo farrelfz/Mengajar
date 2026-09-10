@@ -26,6 +26,7 @@ class KnowledgeDomain(str, Enum):
     PHYSICS = "physics"
     MATHEMATICS = "mathematics"
     RESEARCH_METHODOLOGY = "research_methodology"
+    EXPERIMENT_KIR = "experiment_kir"
     COMPUTER_SCIENCE = "computer_science"
     BIOLOGY = "biology"
     CHEMISTRY = "chemistry"

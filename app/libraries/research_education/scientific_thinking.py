@@ -216,13 +216,18 @@ class HypothesisTestRenderer(CapabilityRenderer[HypothesisTestSpec]):
 
 def _extract_hypothesis_test(step: Any, material: Any) -> dict[str, Any]:
     title = material.content.metadata.title
+    hyp_fact = next((f.statement for f in material.content.facts if "hipotesis" in f.statement.lower() or "hypothes" in f.statement.lower()), None)
+    indep_fact = next((f.statement for f in material.content.facts if "bebas" in f.statement.lower() or "independent" in f.statement.lower()), None)
+    dep_fact = next((f.statement for f in material.content.facts if "terikat" in f.statement.lower() or "dependent" in f.statement.lower()), None)
+    ctrl_fact = next((f.statement for f in material.content.facts if "kontrol" in f.statement.lower() or "control" in f.statement.lower()), None)
+
     return {
-        "research_question": f"How does the primary factor affect target metrics in {title}?",
-        "hypothesis_statement": "If the primary intervention increases, then the target outcome improves proportionally.",
-        "independent_variable": "Primary Factor / Treatment Intervention",
-        "dependent_variable": "Target Metric / Measured Response",
-        "controlled_variables": ["Standard temperature & environment", "Consistent sample size", "Uniform measurement instrument"],
-        "predicted_outcome": "Statistically significant correlation (p < 0.05)",
+        "research_question": f"Bagaimana pengaruh variabel dalam {title}?",
+        "hypothesis_statement": hyp_fact or getattr(step, "purpose", f"Eksplorasi hipotesis fenomena {title}"),
+        "independent_variable": indep_fact or "Variabel Perlakuan Eksperimen",
+        "dependent_variable": dep_fact or "Respon Pengamatan Terikat",
+        "controlled_variables": [ctrl_fact] if ctrl_fact else ["Kondisi lingkungan konstan"],
+        "predicted_outcome": "Korelasi dan fenomena teramati secara empiris",
     }
 
 

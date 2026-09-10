@@ -7,6 +7,9 @@ for a document.
 """
 
 from __future__ import annotations
+import asyncio
+import time
+from typing import Any
 
 from app.agents.base import BaseAgent
 from app.intelligence.classifier import SemanticClassifier
@@ -16,6 +19,7 @@ from app.intelligence.relationship_extractor import RelationshipExtractor
 from app.intelligence.research_role_detector import ResearchRoleDetector
 from app.intelligence.schemas import (
     AnalysisResult,
+    ContentType,
     ContentUnit,
     DocumentGenre,
     ResearchTraceability,
@@ -23,6 +27,7 @@ from app.intelligence.schemas import (
 from app.intelligence.segmenter import ContentSegmenter
 from app.intelligence.traceability_engine import ResearchTraceabilityEngine
 from app.intelligence.visual_intent_detector import VisualIntentDetector
+from app.orchestration.stage_registry import TOTAL_PIPELINE_STAGES, PipelineStageRegistry, ProgressEvent
 
 
 class ContentIntelligenceAgent(BaseAgent):
@@ -65,34 +70,80 @@ class ContentIntelligenceAgent(BaseAgent):
         source_hint: str,
         document_genre: DocumentGenre,
         job_id: str,
+        progress_callback: Any = None,
     ) -> AnalysisResult:
+        import inspect
+
+        async def _notify(stage_idx: int, title: str, status: str, detail: str = "") -> None:
+            if progress_callback:
+                try:
+                    stage_def = PipelineStageRegistry.get_stage(stage_idx)
+                    event = ProgressEvent(
+                        stage_number=stage_def.number,
+                        total_stages=TOTAL_PIPELINE_STAGES,
+                        stage_key=stage_def.key,
+                        title=stage_def.name,
+                        status=status,
+                        detail=detail,
+                        timestamp=time.time(),
+                    )
+                    sig = inspect.signature(progress_callback)
+                    if len(sig.parameters) == 1:
+                        res = progress_callback(event)
+                    else:
+                        res = progress_callback(stage_def.number, TOTAL_PIPELINE_STAGES, stage_def.name, status, detail)
+                    if inspect.iscoroutine(res):
+                        await res
+                except Exception:
+                    pass
+
         self.log_start(job_id=job_id, source_hint=source_hint, genre=document_genre.value)
         
         try:
             # 1. Normalize
+            await _notify(1, "Structural Parsing & Source Integrity", "start", f"Membaca & menganalisis teks sumber ({source_hint})...")
             norm_doc: NormalizedDocument = self.normalizer.normalize(raw_input, source_hint, job_id)
             
             # 2. Segment
             seg_result = self.segmenter.segment(norm_doc, job_id)
             units: list[ContentUnit] = seg_result.content_units
+            await _notify(1, "Structural Parsing & Source Integrity", "done", f"Teks dinormalisasi: {len(units)} unit semantik ({norm_doc.detected_format})")
             
-            # 3. Classify (General + Research roles)
-            for i, unit in enumerate(units):
-                ctx_before = "\n".join(u.normalized_text for u in units[max(0, i-2):i])
-                ctx_after = "\n".join(u.normalized_text for u in units[i+1:min(len(units), i+3)])
-                
-                # General type
-                class_res = await self.classifier.classify(unit, ctx_before, ctx_after, job_id)
-                unit.content_type = class_res.content_type
-                
-                # KTI role if applicable
-                if document_genre == DocumentGenre.RESEARCH_REPORT:
-                    role_res = await self.research_role_detector.detect(unit, ctx_before, ctx_after, job_id)
-                    unit.research_role = role_res.research_role
-                    unit.kti_bab = role_res.kti_bab
-                    unit.is_core_component = role_res.is_core_component
+            # 3. Classify: Rules First, Selective AI for Ambiguous Units
+            await _notify(2, "Local Semantic Classification", "start", f"Menerapkan taksonomi struktural & rule-based pada {len(units)} unit...")
+            from app.intelligence.rule_classifier import RuleClassifier
+            from app.intelligence.selective_reasoner import SelectiveReasoner
 
-            # 4. Relationships (Traceability Graph)
+            rule_engine = RuleClassifier()
+            selective_reasoner = SelectiveReasoner()
+
+            ambiguous_units: list[ContentUnit] = []
+            for u in units:
+                local_res = rule_engine.classify_unit(u, parent_heading=u.title or "")
+                u.content_type = local_res.content_type
+                if local_res.is_ambiguous:
+                    ambiguous_units.append(u)
+
+            await _notify(2, "Local Semantic Classification", "done", f"{len(units) - len(ambiguous_units)}/{len(units)} terklasifikasi lokal, {len(ambiguous_units)} ambigu")
+
+            # 4. Selective AI Reasoning for Ambiguous Units
+            if ambiguous_units:
+                await _notify(3, "Selective AI Reasoning", "start", f"Menyelesaikan {len(ambiguous_units)} unit ambigu via AI Gateway (1 batched call)...")
+                resolved_map = await selective_reasoner.resolve_ambiguous_blocks(
+                    ambiguous_units=ambiguous_units,
+                    document_title=source_hint,
+                    domain=document_genre.value,
+                    job_id=job_id,
+                )
+                for u in ambiguous_units:
+                    if u.unit_id in resolved_map:
+                        u.content_type = resolved_map[u.unit_id].content_type
+                await _notify(3, "Selective AI Reasoning", "done", f"{len(ambiguous_units)} unit ambigu berhasil diinferensi secara batched")
+            else:
+                await _notify(3, "Selective AI Reasoning", "done", "Semua unit terklasifikasi 100% lokal, 0 panggilan AI diperlukan")
+
+            # 5. Relationships (Traceability Graph)
+            await _notify(4, "Content Manifest & Coverage Planning", "start", "Mendeteksi keterhubungan materi & perancangan visual intent...")
             rel_res = await self.relationship_extractor.extract_relationships(units, job_id)
             relationships = rel_res.relationships
 

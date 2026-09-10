@@ -21,8 +21,35 @@ from __future__ import annotations
 
 import logging
 import sys
+from typing import Any, Callable
 
 import structlog
+
+_EVENT_LISTENERS: list[Callable[[str, str, dict[str, Any]], None]] = []
+
+
+def add_log_listener(listener: Callable[[str, str, dict[str, Any]], None]) -> None:
+    """Register a callback that receives structured log events in real-time."""
+    if listener not in _EVENT_LISTENERS:
+        _EVENT_LISTENERS.append(listener)
+
+
+def remove_log_listener(listener: Callable[[str, str, dict[str, Any]], None]) -> None:
+    """Remove a previously registered log listener."""
+    if listener in _EVENT_LISTENERS:
+        _EVENT_LISTENERS.remove(listener)
+
+
+def _dispatch_listener_processor(
+    logger: Any, method_name: str, event_dict: structlog.types.EventDict
+) -> structlog.types.EventDict:
+    if _EVENT_LISTENERS:
+        for listener in list(_EVENT_LISTENERS):
+            try:
+                listener(str(getattr(logger, "name", "")), method_name, dict(event_dict))
+            except Exception:
+                pass
+    return event_dict
 
 
 def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
@@ -41,6 +68,7 @@ def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
     log_level = getattr(logging, level.upper(), logging.INFO)
 
     shared_processors: list[structlog.types.Processor] = [
+        _dispatch_listener_processor,
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_logger_name,
         structlog.stdlib.add_log_level,

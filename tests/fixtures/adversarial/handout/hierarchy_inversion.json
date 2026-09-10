@@ -1,0 +1,20 @@
+{
+  "artifact_type": "HANDOUT",
+  "title": "Adversarial Handout with Inverted Hierarchy",
+  "sections": [
+    {
+      "section_id": "sec_01",
+      "title": "Pendahuluan",
+      "level": 1,
+      "content": "Pengantar konsep fluida non-newtonian.",
+      "source_unit_ids": ["u_intro"]
+    },
+    {
+      "section_id": "sec_02",
+      "title": "Detail Teknis",
+      "level": 3,
+      "content": "Tiba-tiba melompat ke sub-sub-sub bagian tanpa bab perantara.",
+      "source_unit_ids": ["u_tech"]
+    }
+  ]
+}

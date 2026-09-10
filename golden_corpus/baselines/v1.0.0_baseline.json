@@ -1,0 +1,46 @@
+{
+  "GOLDEN_OOBLECK": {
+    "PRESENTATION": {
+      "SEMANTIC": 0.95,
+      "STRUCTURAL": 0.92,
+      "VISUAL": 0.9
+    },
+    "HANDOUT": {
+      "SEMANTIC": 0.96,
+      "STRUCTURAL": 0.94,
+      "VISUAL": 0.92
+    },
+    "WORKSHEET": {
+      "SEMANTIC": 0.92,
+      "STRUCTURAL": 0.9,
+      "PEDAGOGICAL": 0.95
+    },
+    "SCIENTIFIC_DOCUMENT": {
+      "SEMANTIC": 0.95,
+      "STRUCTURAL": 0.92,
+      "SCIENTIFIC": 0.96
+    }
+  },
+  "GOLDEN_HAND_FIRE": {
+    "PRESENTATION": {
+      "SEMANTIC": 0.94,
+      "STRUCTURAL": 0.9,
+      "VISUAL": 0.9
+    },
+    "HANDOUT": {
+      "SEMANTIC": 0.95,
+      "STRUCTURAL": 0.92,
+      "VISUAL": 0.92
+    },
+    "WORKSHEET": {
+      "SEMANTIC": 0.9,
+      "STRUCTURAL": 0.9,
+      "PEDAGOGICAL": 0.94
+    },
+    "SCIENTIFIC_DOCUMENT": {
+      "SEMANTIC": 0.96,
+      "STRUCTURAL": 0.92,
+      "SCIENTIFIC": 0.95
+    }
+  }
+}

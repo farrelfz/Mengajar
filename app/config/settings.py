@@ -10,11 +10,40 @@ See docs/01_FOUNDATION/ENVIRONMENT_SETUP.md and AI_SETUP.md.
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Literal
 
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def _discover_9router_env() -> dict[str, str]:
+    """Discover environment variables from ~/.config/9router/env if available."""
+    discovered: dict[str, str] = {}
+    config_env = Path.home() / ".config" / "9router" / "env"
+    if config_env.exists():
+        try:
+            for line in config_env.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if line.startswith("export "):
+                    line = line[7:].strip()
+                if "=" in line:
+                    k, v = line.split("=", 1)
+                    discovered[k.strip()] = v.strip().strip('"').strip("'")
+        except Exception:
+            pass
+    return discovered
+
+
+_ROUTER_ENV = _discover_9router_env()
+
+
+def _env_get(key: str, default: str = "") -> str:
+    """Retrieve an env var from os.environ or ~/.config/9router/env fallback."""
+    return os.getenv(key, _ROUTER_ENV.get(key, default))
 
 
 class AppSettings(BaseSettings):
@@ -42,11 +71,33 @@ class AppSettings(BaseSettings):
     )
     log_to_file: bool = Field(default=False)
 
-    # ── AI Provider — 9Router ──────────────────────────────────────────────
-    nine_router_api_key: SecretStr | None = Field(default=None)
-    nine_router_base_url: str = Field(default="https://api.9router.io/v1")
+    # ── AI Provider — 9Router (Local Gateway / Cloud) ─────────────────────
+    nine_router_api_key: SecretStr | None = Field(
+        default_factory=lambda: SecretStr(k) if (k := _env_get("NINEROUTER_API_KEY")) else None
+    )
+    nine_router_base_url: str = Field(
+        default_factory=lambda: _env_get("NINEROUTER_BASE_URL", "http://127.0.0.1:20128/v1")
+    )
     nine_router_timeout: float = Field(default=60.0, ge=5.0, le=300.0)
     nine_router_max_retries: int = Field(default=3, ge=0, le=10)
+
+    # ── 9Router Local Model Routing Presets ────────────────────────────────
+    ai_default_model: str = Field(
+        default_factory=lambda: _env_get("AI_DEFAULT_MODEL", "ag/gemini-3.7-flash-high")
+    )
+    ai_fast_model: str = Field(
+        default_factory=lambda: _env_get("AI_FAST_MODEL", "ag/gemini-3.6-flash-medium")
+    )
+    ai_reasoning_model: str = Field(
+        default_factory=lambda: _env_get("AI_REASONING_MODEL", "gh/gpt-5.6-luna")
+    )
+    ai_code_model: str = Field(
+        default_factory=lambda: _env_get("AI_CODE_MODEL", "gh/gpt-5.3-codex")
+    )
+    ai_long_context_model: str = Field(
+        default_factory=lambda: _env_get("AI_LONG_CONTEXT_MODEL", "ollama/qwen3.5")
+    )
+    active_model: str | None = Field(default=None)
 
     # ── AI Provider — Ollama ───────────────────────────────────────────────
     ollama_base_url: str = Field(default="http://localhost:11434")
@@ -84,10 +135,14 @@ class AppSettings(BaseSettings):
     @model_validator(mode="after")
     def check_provider_config(self) -> AppSettings:
         if self.primary_provider == "9router" and not self.offline_mode and self.nine_router_api_key is None:
-            raise ValueError(
-                "KIR_NINE_ROUTER_API_KEY must be set when primary_provider='9router' "
-                "and offline_mode=False. Use primary_provider='ollama' for local-only mode."
-            )
+            # Check if running against local 9router gateway (localhost / 127.0.0.1)
+            if "127.0.0.1" in self.nine_router_base_url or "localhost" in self.nine_router_base_url:
+                self.nine_router_api_key = SecretStr("sk-9router-local")
+            else:
+                raise ValueError(
+                    "KIR_NINE_ROUTER_API_KEY or NINEROUTER_API_KEY must be set when primary_provider='9router' "
+                    "and offline_mode=False. Use primary_provider='ollama' for local-only mode."
+                )
         return self
 
     # ── Convenience ────────────────────────────────────────────────────────
@@ -105,6 +160,20 @@ class AppSettings(BaseSettings):
         if self.nine_router_api_key is None:
             return None
         return self.nine_router_api_key.get_secret_value()
+
+    def set_active_model(self, model_id: str | None) -> None:
+        """Dynamically override active 9Router model."""
+        self.active_model = model_id
+
+    def get_effective_model(self, capability_name: str | None = None) -> str:
+        """Return the effective active model or mapped preset."""
+        if self.active_model:
+            return self.active_model
+        if capability_name in ("fast", "content_writing", "fallback"):
+            return self.ai_fast_model
+        if capability_name in ("reasoning", "semantic_reasoning", "critique"):
+            return self.ai_reasoning_model
+        return self.ai_default_model
 
 
 # Module-level singleton — imported by other modules.

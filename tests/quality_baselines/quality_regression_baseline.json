@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "baselines": {
+    "presentation_good_case": {
+      "minimum_quality_score": 0.80,
+      "expected_decision": "PASS",
+      "rationale": "Clean presentation deck must achieve at least 0.80 quality score."
+    },
+    "presentation_bad_duplicate_case": {
+      "maximum_quality_score": 0.65,
+      "expected_decision": "BLOCKED",
+      "rationale": "Severe duplicate slides must be detected and capped below 0.65."
+    },
+    "handout_good_case": {
+      "minimum_quality_score": 0.80,
+      "expected_decision": "PASS",
+      "rationale": "Structured continuous reading handout must meet high reading flow standard."
+    },
+    "handout_orphan_heading": {
+      "expected_severity": "WARNING",
+      "expected_decision": "PASS_WITH_WARNINGS",
+      "rationale": "Orphan heading at bottom of page must trigger non-blocking warning."
+    },
+    "handout_tiny_text": {
+      "expected_severity": "CRITICAL",
+      "expected_decision": "BLOCKED",
+      "rationale": "Unreadable body font size must block export."
+    },
+    "worksheet_good_case": {
+      "minimum_quality_score": 0.80,
+      "expected_decision": "PASS",
+      "rationale": "Scaffolded inquiry worksheet with active workspace must score >= 0.80."
+    },
+    "worksheet_answer_leakage": {
+      "expected_severity": "CRITICAL",
+      "expected_decision": "BLOCKED",
+      "rationale": "Leaked explanation or answer in prompt must strictly block export."
+    },
+    "worksheet_quiz_collapse": {
+      "maximum_quality_score": 0.68,
+      "expected_decision": "BLOCKED",
+      "rationale": "Collapsing inquiry into 10 consecutive factual recall questions must trigger error."
+    },
+    "scientific_good_case": {
+      "minimum_quality_score": 0.80,
+      "expected_decision": "PASS",
+      "rationale": "Grounded KTI document with complete BAB structure must score >= 0.80."
+    },
+    "scientific_unsupported_claim": {
+      "expected_severity": "CRITICAL",
+      "expected_decision": "BLOCKED",
+      "rationale": "Unsupported empirical claim presented as fact must block academic export."
+    },
+    "scientific_bab_inversion": {
+      "expected_severity": "CRITICAL",
+      "expected_decision": "BLOCKED",
+      "rationale": "BAB hierarchy inversion must block export."
+    }
+  }
+}

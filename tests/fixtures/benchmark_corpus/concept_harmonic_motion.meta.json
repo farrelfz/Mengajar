@@ -1,0 +1,34 @@
+{
+  "fixture_id": "concept_harmonic_motion",
+  "source_path": "/home/si/Codingan/Mencari nafkah/Mengajar/tests/fixtures/benchmark_corpus/concept_harmonic_motion.md",
+  "corpus_category": "CONCEPT_HEAVY",
+  "domain": "Fisika Gelombang / Getaran",
+  "difficulty_level": "INTERMEDIATE",
+  "structural_signature": {
+    "token_count": 143,
+    "character_count": 926,
+    "section_count": 4,
+    "max_heading_depth": 2,
+    "table_count": 0,
+    "formula_count": 7,
+    "has_code_blocks": false,
+    "has_mixed_languages": false,
+    "card_estimate": 4
+  },
+  "semantic_density": 0.11916666666666667,
+  "formula_density": 1.0,
+  "table_density": 0.0,
+  "narrative_complexity": 0.3,
+  "inquiry_complexity": 0.4,
+  "evidence_complexity": 0.4,
+  "expected_artifact_types": [
+    "PRESENTATION",
+    "HANDOUT",
+    "WORKSHEET",
+    "SCIENTIFIC_DOCUMENT"
+  ],
+  "known_pathologies": [],
+  "split": "UNSEEN_GENERALIZATION",
+  "provenance": "Phase 4.1 Benchmark Corpus Expansion",
+  "content_hash": "8112e38e89a72232"
+}

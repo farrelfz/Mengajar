@@ -16,6 +16,9 @@ from app.rendering.reportlab.renderer import ReportLabRenderer
 from app.rendering.visuals.matplotlib_renderer import MatplotlibRenderer
 from app.rendering.playwright.pdf_exporter import PlaywrightRenderer
 from app.rendering.validation.pdf_validator import PDFValidator
+from app.core.logging import get_logger
+
+log = get_logger(__name__)
 
 
 class MasterRenderEngine:
@@ -57,6 +60,7 @@ class MasterRenderEngine:
             self.output_dir,
             filename=f"{slug}.html"
         )
+        log.info("render.html_assembled", slug=slug, html_path=str(html_path), pages=len(composition.pages))
         
         # 5. Authoritative Physical Format Resolution
         resolved_fmt = resolve_format(
@@ -118,4 +122,5 @@ class MasterRenderEngine:
         result.pdf_path = str(pdf_path)
         result.assets_generated = len(self.asset_manager.registry.get_all())
         result.pages = validation_result.get("page_count", len(composition.pages))
+        log.info("render.pdf_generated", pdf_path=str(pdf_path), pages=result.pages, slug=slug)
         return result

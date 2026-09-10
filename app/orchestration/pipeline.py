@@ -9,9 +9,12 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-from app.agents.content_intelligence_agent import ContentIntelligenceAgent
-from app.agents.document_planner import DocumentPlanner
-from app.agents.quality_critic import QualityCritic
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.agents.content_intelligence_agent import ContentIntelligenceAgent
+    from app.agents.document_planner import DocumentPlanner
+    from app.agents.quality_critic import QualityCritic
 from app.core.logging import get_logger
 from app.intelligence.schemas import (
     DocumentGenre,
@@ -33,9 +36,18 @@ class IntelligencePipeline:
         planner_agent: DocumentPlanner | None = None,
         critic_agent: QualityCritic | None = None,
     ) -> None:
-        self.intelligence_agent = intelligence_agent or ContentIntelligenceAgent()
-        self.planner_agent = planner_agent or DocumentPlanner()
-        self.critic_agent = critic_agent or QualityCritic()
+        if intelligence_agent is None:
+            from app.agents.content_intelligence_agent import ContentIntelligenceAgent
+            intelligence_agent = ContentIntelligenceAgent()
+        if planner_agent is None:
+            from app.agents.document_planner import DocumentPlanner
+            planner_agent = DocumentPlanner()
+        if critic_agent is None:
+            from app.agents.quality_critic import QualityCritic
+            critic_agent = QualityCritic()
+        self.intelligence_agent = intelligence_agent
+        self.planner_agent = planner_agent
+        self.critic_agent = critic_agent
 
     async def run(
         self,

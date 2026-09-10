@@ -1,0 +1,20 @@
+{
+  "artifact_type": "SCIENTIFIC_DOCUMENT",
+  "document_title": "Adversarial KTI with Unsupported Claim",
+  "babs": [
+    {
+      "bab_number": 4,
+      "title": "BAB IV HASIL DAN PEMBAHASAN",
+      "subsections": [
+        {
+          "title": "4.1 Analisis Viskositas Fluida",
+          "claims": [
+            "Terbukti secara absolut bahwa oobleck dapat menghentikan peluru balistik berkecepatan tinggi."
+          ],
+          "evidence_ids": [],
+          "source_refs": ["u_visc_01"]
+        }
+      ]
+    }
+  ]
+}

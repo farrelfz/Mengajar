@@ -50,6 +50,24 @@ class QualityEvaluationEngine:
         QualityDimension.ACCESSIBILITY: 0.8,
     }
 
+    def evaluate(
+        self,
+        blueprint: SemanticMaterialBlueprint | None = None,
+        composition: DocumentComposition | None = None,
+        pdf_path: str | Path | None = None,
+        target_format: str = "a4_portrait",
+        job_id: str = "default_job",
+        journey: LearningJourney | None = None,
+    ) -> QualityReport:
+        return self.evaluate_artifact(
+            job_id=job_id,
+            blueprint=blueprint,
+            journey=journey,
+            composition=composition,
+            pdf_path=pdf_path,
+            target_format=target_format,
+        )
+
     @classmethod
     def evaluate_artifact(
         cls,

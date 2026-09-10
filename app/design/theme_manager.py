@@ -34,3 +34,9 @@ class ThemeRegistry:
 
 # Global registry instance
 theme_registry = ThemeRegistry()
+
+# Import presets to auto-register default themes
+import app.design.presets.editorial  # noqa: F401
+import app.design.presets.educational  # noqa: F401
+import app.design.presets.presentation  # noqa: F401
+

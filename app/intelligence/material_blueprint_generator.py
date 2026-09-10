@@ -90,51 +90,97 @@ class MaterialBlueprintGenerator:
         # 2. Level B — Pedagogical Blueprint
         pedagogical_steps: list[PedagogicalStep] = []
         
-        # Opening Hook
-        pedagogical_steps.append(PedagogicalStep(
-            semantic_type=SemanticStepType.HOOK,
-            purpose="Engage learners with the central question or real-world phenomenon",
-        ))
-
-        # Check if research problem or hypothesis is present
-        has_research_problem = any(
-            "problem" in u.normalized_text.lower() or "phenomenon" in u.normalized_text.lower() or "rumusan" in u.normalized_text.lower()
-            for u in units
-        )
-        has_hypothesis = any(
-            "hypothes" in u.normalized_text.lower() or "variable" in u.normalized_text.lower()
-            for u in units
-        )
-
-        if has_research_problem:
+        if domain == KnowledgeDomain.EXPERIMENT_KIR:
+            # Standar Pakem Eksperimen KIR:
+            # 1. Pendahuluan, Fenomena & Tujuan Eksperimen
             pedagogical_steps.append(PedagogicalStep(
-                semantic_type=SemanticStepType.VISUALIZATION,
-                purpose="Formulate the research question using problem funnel",
-                visual_intent="research_problem_funnel",
+                semantic_type=SemanticStepType.HOOK,
+                purpose="Pendahuluan: Latar belakang fenomena sains, konsep dasar & tujuan eksperimen",
             ))
 
-        if has_hypothesis:
+            # 2. Hipotesis & Variabel Penelitian (Bebas, Terikat, Kontrol)
             pedagogical_steps.append(PedagogicalStep(
                 semantic_type=SemanticStepType.MATHEMATICAL_MODEL,
-                purpose="Operationalize hypothesis and variable matrix",
+                purpose="Formulasi hipotesis ilmiah & matriks variabel penelitian (bebas, terikat, kontrol)",
                 visual_intent="hypothesis_testing",
             ))
 
-        # Add Concept & Summary steps
-        pedagogical_steps.append(PedagogicalStep(
-            semantic_type=SemanticStepType.CONCEPT,
-            purpose="Explain the core underlying scientific concepts",
-        ))
-        pedagogical_steps.append(PedagogicalStep(
-            semantic_type=SemanticStepType.SUMMARY,
-            purpose="Summarize key takeaways and practical guidance",
-        ))
+            # 3. Alat, Bahan & Protokol Keselamatan Kerja Laboratorium
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.VISUALIZATION,
+                purpose="Spesifikasi alat, takaran bahan/reagen & protokol keselamatan kerja (K3/Safety)",
+                visual_intent="research_problem_funnel",
+            ))
 
-        pedagogy_bp = PedagogicalBlueprint(
-            primary_pattern=PedagogicalPattern.SCIENTIFIC_REASONING if has_research_problem else PedagogicalPattern.CONCRETE_TO_ABSTRACT,
-            narrative_rationale="Phenomenon -> Problem Structuring -> Concept Understanding -> Synthesis",
-            sequence=pedagogical_steps,
-        )
+            # 4. Tahapan Prosedur Kerja Eksperimen (Step-by-Step)
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.WORKED_EXAMPLE,
+                purpose="Prosedur kerja sistematis berurutan dan teknik replikasi pengulangan (triplo)",
+            ))
+
+            # 5. Tabel Matriks Data Pengamatan & Lembar Observasi
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.PRACTICE,
+                purpose="Matriks tabel hasil pengamatan, pencatatan data kuantitatif/kualitatif & grafik",
+            ))
+
+            # 6. Analisis Hasil, Pembahasan Ilmiah & Kesimpulan
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.SUMMARY,
+                purpose="Analisis data, pembahasan perbandingan teori vs fakta eksperimen & kesimpulan",
+            ))
+
+            pedagogy_bp = PedagogicalBlueprint(
+                primary_pattern=PedagogicalPattern.SCIENTIFIC_REASONING,
+                narrative_rationale="Pendahuluan & Tujuan -> Hipotesis & Variabel -> Alat/Bahan & K3 -> Prosedur Kerja -> Data Pengamatan -> Pembahasan & Kesimpulan",
+                sequence=pedagogical_steps,
+            )
+        else:
+            # Opening Hook
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.HOOK,
+                purpose="Engage learners with the central question or real-world phenomenon",
+            ))
+
+            # Check if research problem or hypothesis is present
+            has_research_problem = any(
+                "problem" in u.normalized_text.lower() or "phenomenon" in u.normalized_text.lower() or "rumusan" in u.normalized_text.lower()
+                for u in units
+            )
+            has_hypothesis = any(
+                "hypothes" in u.normalized_text.lower() or "variable" in u.normalized_text.lower()
+                for u in units
+            )
+
+            if has_research_problem:
+                pedagogical_steps.append(PedagogicalStep(
+                    semantic_type=SemanticStepType.VISUALIZATION,
+                    purpose="Formulate the research question using problem funnel",
+                    visual_intent="research_problem_funnel",
+                ))
+
+            if has_hypothesis:
+                pedagogical_steps.append(PedagogicalStep(
+                    semantic_type=SemanticStepType.MATHEMATICAL_MODEL,
+                    purpose="Operationalize hypothesis and variable matrix",
+                    visual_intent="hypothesis_testing",
+                ))
+
+            # Add Concept & Summary steps
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.CONCEPT,
+                purpose="Explain the core underlying scientific concepts",
+            ))
+            pedagogical_steps.append(PedagogicalStep(
+                semantic_type=SemanticStepType.SUMMARY,
+                purpose="Summarize key takeaways and practical guidance",
+            ))
+
+            pedagogy_bp = PedagogicalBlueprint(
+                primary_pattern=PedagogicalPattern.SCIENTIFIC_REASONING if has_research_problem else PedagogicalPattern.CONCRETE_TO_ABSTRACT,
+                narrative_rationale="Phenomenon -> Problem Structuring -> Concept Understanding -> Synthesis",
+                sequence=pedagogical_steps,
+            )
 
         # 3. Level C — Production Blueprint
         prod_requirements: list[ProductionRequirement] = []

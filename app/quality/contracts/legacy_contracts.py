@@ -1,8 +1,9 @@
 """
-KIR AI Document Intelligence — Quality Evaluation Contracts.
+KIR AI Document Intelligence — Quality Evaluation Contracts (Legacy Compatibility).
 
-Defines the multi-dimensional quality model, metric structures, finding taxonomies,
-evaluation traces, and formal Quality Gate decisions.
+Preserves all legacy contracts for quality evaluation:
+QualityDimension, QualitySeverity, QualityLevel, EvaluationStage, QualityGateDecision,
+QualityFinding, QualityMetric, QualityScore, EvaluationTrace, QualityGateResult, QualityReport.
 """
 
 from __future__ import annotations

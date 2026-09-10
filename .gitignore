@@ -17,9 +17,20 @@ __pycache__/
 logs/*
 !logs/.gitkeep
 
-# Generated outputs
+# Generated outputs and runtime artifacts
 outputs/*
 !outputs/.gitkeep
+output/
+artifacts/
+
+# Build & egg-info
+*.egg-info/
+build/
+dist/
+
+# IDE & system
+.codegraph/
+.system_generated/
 
 # Cache
 data/cache/*

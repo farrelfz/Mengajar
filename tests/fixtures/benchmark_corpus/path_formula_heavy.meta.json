@@ -1,0 +1,34 @@
+{
+  "fixture_id": "path_formula_heavy",
+  "source_path": "/home/si/Codingan/Mencari nafkah/Mengajar/tests/fixtures/benchmark_corpus/path_formula_heavy.md",
+  "corpus_category": "PATHOLOGICAL",
+  "domain": "Stress Test: Extreme Formula Density",
+  "difficulty_level": "PATHOLOGICAL",
+  "structural_signature": {
+    "token_count": 93,
+    "character_count": 609,
+    "section_count": 3,
+    "max_heading_depth": 2,
+    "table_count": 0,
+    "formula_count": 8,
+    "has_code_blocks": false,
+    "has_mixed_languages": false,
+    "card_estimate": 3
+  },
+  "semantic_density": 0.0775,
+  "formula_density": 1.0,
+  "table_density": 0.0,
+  "narrative_complexity": 0.3,
+  "inquiry_complexity": 0.4,
+  "evidence_complexity": 0.4,
+  "expected_artifact_types": [
+    "PRESENTATION",
+    "HANDOUT",
+    "WORKSHEET",
+    "SCIENTIFIC_DOCUMENT"
+  ],
+  "known_pathologies": [],
+  "split": "ADVERSARIAL",
+  "provenance": "Phase 4.1 Benchmark Corpus Expansion",
+  "content_hash": "3d0ab667999b4682"
+}
