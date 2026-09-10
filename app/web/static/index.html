@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mengajar & KIR Studio · AI Document Intelligence</title>
-  <meta name="description" content="Localhost Web Dashboard Studio untuk Pembuatan Materi Pengajaran dan Dokumen KTI berbasis AI melalui 9Router Gateway">
+  <title>Universal Document Intelligence System</title>
+  <meta name="description" content="Localhost Web Dashboard Studio untuk Universal Document Intelligence System">
   <link rel="stylesheet" href="/static/app.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
@@ -21,8 +21,8 @@
           </svg>
         </div>
         <div class="brand-titles">
-          <h1>MENGAJAR & KIR STUDIO</h1>
-          <span>AI DOCUMENT INTELLIGENCE DASHBOARD</span>
+          <h1>UNIVERSAL DOCUMENT INTELLIGENCE SYSTEM</h1>
+          <span>PRODUCTION DASHBOARD</span>
         </div>
       </div>
 
@@ -192,10 +192,17 @@
 
               <div class="form-group">
                 <div class="editor-header">
-                  <label>MATERI MENTAH (MARKDOWN / TEKS)</label>
-                  <span id="wordCountLabel" style="font-size: 0.72rem; color: var(--text-muted);">0 kata</span>
+                  <label>MATERI MENTAH (MARKDOWN / TEKS / PDF)</label>
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <label for="fileUploadInput" class="btn-secondary" style="cursor: pointer; padding: 4px 10px; font-size: 0.72rem; margin: 0; display: inline-flex; align-items: center; gap: 5px; border-radius: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary);">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                      Upload PDF / Dokumen
+                    </label>
+                    <input type="file" id="fileUploadInput" accept=".pdf,.md,.txt,.markdown" style="display: none;">
+                    <span id="wordCountLabel" style="font-size: 0.72rem; color: var(--text-muted);">0 kata</span>
+                  </div>
                 </div>
-                <textarea class="form-control" id="inputRawContent" placeholder="Ketik atau paste materi pengajaran / catatan eksperimen di sini..."></textarea>
+                <textarea class="form-control" id="inputRawContent" placeholder="Ketik, paste materi, atau upload dokumen PDF di atas..."></textarea>
               </div>
 
               <button class="btn-primary" id="btnStartGenerate">

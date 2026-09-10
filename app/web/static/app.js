@@ -265,6 +265,43 @@ document.addEventListener('DOMContentLoaded', () => {
     btnLoadSamplePhysics.addEventListener('click', () => loadSampleByType('physics'));
   }
 
+  // File Upload Ingestion (PDF / Markdown / TXT)
+  const fileUploadInput = document.getElementById('fileUploadInput');
+  if (fileUploadInput) {
+    fileUploadInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      appendTerminalLog(`Mengunggah dan mengekstrak dokumen "${file.name}"...`, 'info');
+      if (jobStatusBadge) jobStatusBadge.textContent = 'MENGUNGGAH';
+      try {
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.detail || `HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        if (data.status === 'ok') {
+          if (data.title && inputTitle) inputTitle.value = data.title;
+          if (inputRawContent) {
+            inputRawContent.value = data.content || '';
+            inputRawContent.dispatchEvent(new Event('input'));
+          }
+          if (jobStatusBadge) jobStatusBadge.textContent = 'TERUNGGAH';
+          appendTerminalLog(`Dokumen "${data.filename}" berhasil di-ingest (${data.size_kb} KB, ${data.page_count} hal). Siap digenerate.`, 'success');
+        }
+      } catch (err) {
+        console.error(err);
+        appendTerminalLog(`Gagal memproses dokumen: ${err.message}`, 'error');
+        if (jobStatusBadge) jobStatusBadge.textContent = 'GAGAL UPLOAD';
+      } finally {
+        fileUploadInput.value = '';
+      }
+    });
+  }
+
+
   // Log Controls (Copy & Clear)
   const btnCopyLogs = document.getElementById('btnCopyLogs');
   const btnClearLogs = document.getElementById('btnClearLogs');

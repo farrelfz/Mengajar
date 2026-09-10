@@ -17,7 +17,7 @@ import uuid
 from pathlib import Path
 from typing import Any, AsyncGenerator
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
+from fastapi import BackgroundTasks, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -47,8 +47,8 @@ READ_MODEL_SERVICE = JobReadModelService()
 READ_MODEL_QUERY = JobReadQueryService()
 
 app = FastAPI(
-    title="Mengajar & KIR Studio Dashboard",
-    description="Localhost Web Dashboard for AI Document Intelligence powered by 9Router",
+    title="Universal Document Intelligence System",
+    description="Localhost Web Dashboard for Universal Document Intelligence System",
     version="0.2.0",
 )
 
@@ -425,6 +425,52 @@ async def api_sample_input(sample_type: str = "kir") -> dict[str, str]:
         "2. **Saran & Pengembangan**: Untuk riset KIR lanjutan, disarankan menguji pengaruh inhibitor suhu tinggi (>60°C) dan variasi pH asam/basa pada aktivitas denaturasi enzim katalase."
     )
     return {"title": "Laporan Eksperimen KIR: Uji Enzim Katalase", "content": content, "matpel": "Eksperimen (KIR)"}
+
+
+@app.post("/api/upload")
+async def api_upload(file: UploadFile = File(...)) -> dict[str, Any]:
+    """Ingest an uploaded document (PDF, Markdown, TXT) and extract text/metadata."""
+    filename = file.filename or "uploaded_document"
+    contents = await file.read()
+
+    extracted_text = ""
+    page_count = 1
+    doc_title = Path(filename).stem.replace("_", " ").title()
+
+    if filename.lower().endswith(".pdf"):
+        import fitz
+        try:
+            doc = fitz.open(stream=contents, filetype="pdf")
+            page_count = len(doc)
+            pages_text = []
+            for page in doc:
+                text = page.get_text()
+                if text.strip():
+                    pages_text.append(text.strip())
+            extracted_text = "\n\n".join(pages_text)
+            if not extracted_text.strip():
+                extracted_text = f"# {doc_title}\n\n(Dokumen PDF terbaca namun tidak memiliki teks vektor)"
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail=f"Gagal memproses file PDF: {exc}")
+    else:
+        try:
+            extracted_text = contents.decode("utf-8")
+        except UnicodeDecodeError:
+            extracted_text = contents.decode("latin-1", errors="replace")
+
+    lines = [ln.strip() for ln in extracted_text.splitlines() if ln.strip()]
+    if lines and lines[0].startswith("# "):
+        doc_title = lines[0].lstrip("# ").strip()
+
+    return {
+        "status": "ok",
+        "title": doc_title,
+        "content": extracted_text,
+        "filename": filename,
+        "page_count": page_count,
+        "size_kb": round(len(contents) / 1024, 1),
+    }
+
 
 
 # ─────────────────────────────────────────────────────────────

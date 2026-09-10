@@ -16,7 +16,20 @@ def client() -> TestClient:
 def test_web_dashboard_root(client: TestClient) -> None:
     response = client.get("/")
     assert response.status_code == 200
-    assert "MENGAJAR & KIR STUDIO" in response.text
+    assert "UNIVERSAL DOCUMENT INTELLIGENCE SYSTEM" in response.text
+
+
+def test_web_dashboard_upload(client: TestClient) -> None:
+    response = client.post(
+        "/api/upload",
+        files={"file": ("test_doc.md", b"# Test Title\n\nContent body here.", "text/markdown")},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+    assert data["title"] == "Test Title"
+    assert "Content body here." in data["content"]
+
 
 
 def test_web_dashboard_status(client: TestClient) -> None:
